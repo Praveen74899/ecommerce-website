@@ -16,57 +16,49 @@ import Signup from "./pages/Signup";
 import Category from "./pages/adminpages/AddCategory";
 import GetAllCategory  from "./pages/userpages/GetAllCategory"
 import ShopByCategory from "./pages/userpages/ShopByCategory";
-
+import About from "./pages/userpages/About";
+import BestSeller from "./pages/adminpages/BestSeller";
+import GetAllBestSeller from "./pages/userpages/GetAllBestSeller";
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* Public Routes */}
-        <Route path="/" element={<Login />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+<BrowserRouter>
+  <Routes>
 
-        {/* ✅ Admin Protected Routes */}
-        <Route
-          path="/admin"
-          element={
-            <ProtectedRoute allowedRoles={["admin"]}>
-              <Admindashboard />
-            </ProtectedRoute>
-          }
-        >
-          <Route index element={<DashboardHome />} /> {/* Default admin home */}
-          <Route path="dashboard" element={<DashboardHome />} />
-          <Route path="users" element={<Users />} />
-          <Route path="importproduct" element={<ImportProduct />} />
-          <Route path="category" element={<Category />} />
-          <Route path="reports" element={<Reports />} />
-          <Route path="settings" element={<Settings />} />
+    {/* 🌎 Public User Layout */}
+    <Route path="/" element={<UserLayout />}>
+      <Route index element={<Userdashboard />} />
+      <Route path="dashboard" element={<Userdashboard />} />
+      <Route path="oneproduct/:id" element={<OneProduct />} />
+      <Route path="shopbycategory" element={<ShopByCategory />} />
+      <Route path="getallcategory/:id" element={<GetAllCategory />} />
+      <Route path="getallbestseller" element={<GetAllBestSeller />} />
+       <Route path="/about" element={<About />} />
+    </Route>
 
-        </Route>
+    {/* 🔐 Login / Signup */}
+    <Route path="/login" element={<Login />} />
+    <Route path="/signup" element={<Signup />} />
 
-
-
-        {/* ✅ User Protected Routes */}
-       <Route
-  path="/user"
-  element={
-    <ProtectedRoute allowedRoles={["user"]}>
-      <UserLayout />   
-    </ProtectedRoute>
-  }
->
-  <Route path="dashboard" element={<Userdashboard />} />
-  <Route path="shopbycategory" element={<ShopByCategory />} />
-  <Route path="oneproduct/:id" element={<OneProduct />} />
-  <Route path="getallcategory/:id" element={<GetAllCategory />} />
-
+    {/* 🔐 Admin Protected */}
+   <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
+    <Route path="/admin" element={<Admindashboard />}>
+        <Route index element={<DashboardHome />} />
+        <Route path="dashboard" element={<DashboardHome />} />
+        <Route path="users" element={<Users />} />
+        <Route path="importproduct" element={<ImportProduct />} />
+        <Route path="category" element={<Category />} />
+        <Route path="bestseller" element={<BestSeller />} />
+        <Route path="reports" element={<Reports />} />
+        <Route path="settings" element={<Settings />} />
+    </Route>
 </Route>
-            
-        {/* 404 */}
-        <Route path="*" element={<div>404 Not Found</div>} />
-      </Routes>
-    </BrowserRouter>
+
+
+    {/* 404 */}
+    <Route path="*" element={<div>404 Page Not Found</div>} />
+  </Routes>
+</BrowserRouter>
+
   );
 }
 

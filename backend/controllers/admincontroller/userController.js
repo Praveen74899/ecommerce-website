@@ -10,6 +10,7 @@ const e = require("express");
 dotenv.config();
 
 const Category = require("../../models/categorymodel.js");
+const BestSeller = require("../../models/bestseller.js");
 
 exports.createUser = async (req, res) => {
   try {
@@ -661,3 +662,123 @@ exports.editProductById = async (req, res) => {
   }
 };
 
+
+
+exports.bestSeller = async (req,res) => {
+  try {
+    const {name} = req.body;
+        const BASE_URL = getBaseUrl(req);
+     const image = `${BASE_URL}/${req.file.path}`; 
+
+     const newBestSeller = await BestSeller.create({name, image});
+     res.status(200).json({success: true, message: "Bestseller added", newBestSeller});
+
+  } catch(error) {
+    res.status(500).json({success: false, message: error.message});
+  }
+}
+
+
+exports.getBestSeller = async (req,res) => {
+  try{
+  const bestSellers = await BestSeller.find();
+  res.status(200).json({
+    success: true, 
+    message: "Bestsellers fetched successfully", 
+    bestSellers: bestSellers,
+    count: bestSellers.length
+  });
+  } catch(error){
+    res.status(500).json({success: false, message: error.message});
+  }
+}
+
+exports.deletebestsellerById = async(req,res)=>{
+  try {
+    const bestsellerId = req.params.id;
+    await BestSeller.findByIdAndDelete(bestsellerId);
+    res.status(200).json({ success: true, message: "Bestseller deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+}
+
+exports.updatebestsellerStatus = async (req,res) =>{
+  try {
+    const { status } = req.body;
+
+    const updated = await BestSeller.findByIdAndUpdate(
+      req.params.id,
+      { status },
+      { new: true }
+    );
+
+    res.status(200).json({ success: true, message: "Bestseller status updated successfully",updated });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+}
+
+
+
+
+exports.addProductToBestSeller = async (req, res) => {
+  try {
+    const { id } = req.params;   // BestSeller ID
+    const { name, title, price, description, sizes,  colors } = req.body;
+
+    // 1) Check if bestSeller exists
+    const exists = await BestSeller.findById(id);
+    if (!exists) {
+      return res.json({ success: false, message: "BestSeller not found" });
+    }
+
+    // 2) Image
+    const BASE_URL = getBaseUrl(req);
+    
+const mainImage = req.files?.mainImage
+  ? `${BASE_URL}/uploads/${req.files.mainImage[0].filename}`
+  : null;
+
+const subImages = req.files?.subImages
+  ? req.files.subImages.map((file) => `${BASE_URL}/uploads/${file.filename}`)
+  : [];
+
+    // 3) Create product
+    const product = await Product.create({
+      name,
+      price,
+      description,
+      title,
+      mainImage,
+      subImages,
+      sizes,
+      colors,
+      mainImage,
+      subImages,
+      bestSeller: id,               // mark as bestSeller product
+    });
+
+    return res.json({
+      success: true,
+      message: "Product added under BestSeller",
+      product,
+    });
+
+  } catch (err) {
+    return res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+
+
+
+exports.getAllbestsellerbyid = async (req, res) => {
+  try {
+    const bestSellerId = req.params.id;
+    const products = await Product.find({ bestSeller: bestSellerId });
+    res.status(200).json({ success: true, message: "BestSeller products fetched successfully", products });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};

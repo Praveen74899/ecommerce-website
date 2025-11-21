@@ -86,7 +86,7 @@ useEffect(() => {
               <div
                 key={product._id}
                 className="bg-white rounded-xl shadow hover:shadow-lg transition cursor-pointer"
-                onClick={() => navigate(`/user/oneproduct/${product._id}`)}
+                onClick={() => navigate(`/oneproduct/${product._id}`)}
               >
                 <img
                   src={product.mainImage}

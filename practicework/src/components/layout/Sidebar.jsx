@@ -94,6 +94,7 @@ const isActive = (path) => location.pathname === path;
     { name: "Users", path: "/admin/users" },
     { name: "Import Product", path: "/admin/importproduct" },
     {name:"Category",path:"/admin/category"},
+    {name:"BestSeller",path:"/admin/bestseller"},
     { name: "Reports", path: "/admin/reports" },
     { name: "Settings", path: "/admin/settings" },
   ];
@@ -101,7 +102,7 @@ const isActive = (path) => location.pathname === path;
   return (
     <>
       {/* ==================== DESKTOP SIDEBAR ==================== */}
-      <div className="hidden md:flex flex-col w-64 bg-white border-r shadow-lg z-50 border-gray-200 text-gray-700 p-6 h-screen ">
+      <div className="hidden md:flex flex-col w-64 bg-white border-r shadow-lg border-gray-200 text-gray-700 p-6 h-screen ">
         <h2 className="text-2xl font-semibold text-gray-800 mb-8">Admin Panel</h2>
 
         <nav className="space-y-3">

@@ -19,7 +19,9 @@ const ShopByCategory = () => {
   }, []);
 
 
-
+useEffect(() => {
+  window.scrollTo(0, 0);   // instant jump to top
+}, []);
 
   return (
     <div className="max-w-7xl mx-auto px-4 md:px-6 my-10">
@@ -45,7 +47,7 @@ const ShopByCategory = () => {
             <div
               // onClick={() => navigate(`//${cat._id}`)}
               onClick={() => {
-                navigate(`/user/getallcategory/${cat._id}`);
+                navigate(`/getallcategory/${cat._id}`);
 
               }}
               key={cat._id}

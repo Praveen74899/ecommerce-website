@@ -1,5 +1,6 @@
 // src/utils/api.js
 import axios from "axios";
+import { toast } from "react-toastify";
 
 // baseURL adjust kar le apne backend ke hisaab se
 const API = axios.create({
@@ -15,6 +16,11 @@ API.interceptors.request.use(
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    if(!token){
+      toast.error("token Expired!");
+      window.location.href = "/login";
     }
    
     return config;

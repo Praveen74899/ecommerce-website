@@ -10,7 +10,14 @@ const productSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Category",
     required: true
-  }
+  },
+
+  bestSeller: {
+  type: mongoose.Schema.Types.ObjectId,
+  ref: "BestSeller",
+  default: null,
+},
+
 });
 
 module.exports = mongoose.model("Product", productSchema);

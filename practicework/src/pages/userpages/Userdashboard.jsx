@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import API from "../../utils/api"
-import UserDashboardNavbar from "../../components/layout/UserNavbar";
+import UserDashboardNavbar from "../../components/Userlayout/UserNavbar";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { Heart } from "lucide-react";
 import Footer from "../../components/Footer";
 import { jwtDecode } from "jwt-decode";
 import ShopByCategory from "./ShopByCategory";
+import GetAllBestSeller from "./GetAllBestSeller";
 
 const bannerImages = [
   "/bedsheet.jpg",
@@ -154,6 +155,8 @@ const Dashboard = () => {
 
       <ShopByCategory />
 
+      <GetAllBestSeller/>
+
       {/* Dashboard Content */}
 
 
@@ -173,7 +176,7 @@ const Dashboard = () => {
               <div
                 key={product._id}
                 className="bg-gray-50 p-4 rounded-xl shadow cursor-pointer"
-                onClick={() => navigate(`/user/oneproduct/${product._id}`)}
+                onClick={() => navigate(`/oneproduct/${product._id}`)}
               >
 
                 <img

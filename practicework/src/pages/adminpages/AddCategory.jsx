@@ -447,7 +447,7 @@ const handleUpdate = async (e) => {
 
 
   return (
-    <div className="max-w-4xl mx-auto mt-10">
+    <div className="w-full mx-auto mt-10">
 
       {/* TOP BAR */}
       <div className="flex flex-wrap justify-between items-center mb-5 gap-3">
@@ -575,7 +575,7 @@ const handleUpdate = async (e) => {
 
       {/* ----------- MODAL --------------- */}
       {openModal && (
-  <div className="fixed inset-0 bg-black/10 backdrop-blur-sm flex justify-center items-center">
+  <div className="fixed inset-0 bg-black/10 backdrop-blur-sm flex justify-center items-center z-50">
     <div className="bg-white p-6 rounded-xl max-w-md w-full shadow-lg">
 
       <h2 className="text-xl font-semibold mb-4">Add New Category</h2>

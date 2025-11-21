@@ -32,8 +32,15 @@ const OneProduct = () => {
     fetchProduct();
   }, [id]);
 
+  
+  useEffect(() => {
+  window.scrollTo(0, 0);   // instant jump to top
+}, []);
+
   if (loading) return <p className="p-5 text-lg">Loading...</p>;
   if (!product) return <p className="p-5 text-lg">Product not found</p>;
+
+
 
   return (
     <div className="max-w-6xl mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-10">

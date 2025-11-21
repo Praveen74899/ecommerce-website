@@ -52,7 +52,7 @@ const { login } = useAuth();
         if (response.data.user.role === "admin") {
           navigate("/admin/dashboard");
         } else {
-          navigate("/user/dashboard");
+          navigate("/dashboard");
         }
       }, 500);
     } else {

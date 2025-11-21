@@ -1,4 +1,5 @@
 const products = require("../../models/uploadmodel.js")
+  const BestSeller = require("../../models/bestseller.js");
 exports.getAllProductsForUser = async (req, res) => {
   try {
       console.log("Controller hit");
@@ -100,3 +101,38 @@ exports.getAllProductByCategory = async (req, res) => {
     });
   }
 };
+
+
+
+
+
+
+exports.getBestSeller = async (req,res) => {
+  try{
+  const bestSellers = await BestSeller.find();
+  res.status(200).json({
+    success: true, 
+    message: "Bestsellers fetched successfully", 
+    bestSellers: bestSellers,
+    count: bestSellers.length
+  });
+  } catch(error){
+    res.status(500).json({success: false, message: error.message});
+  }
+}
+
+
+
+exports.getAllNewArrival = async (req,res) => {
+  try{
+  const newArrival = await products.find().sort({ createdAt: -1 }).limit(10);
+  res.status(200).json({
+    success: true, 
+    message: "NewArrival fetched successfully", 
+    newArrival: newArrival,
+    count: newArrival.length
+  });
+  } catch(error){
+    res.status(500).json({success: false, message: error.message});
+  }
+}

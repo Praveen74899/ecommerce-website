@@ -6,22 +6,20 @@ const productSchema = new mongoose.Schema(
     title: { type: String, required: true },
     price: { type: Number, required: true },
 
-    // CATEGORY ID
     categoryId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Category",
-      required: true,
+      required: false,  // ← BESTSELLER PRODUCTS ke liye optional
+      default: null,
     },
 
-    // COLORS
     colors: {
       type: [String],
       default: [],
     },
 
-    // BED SHEET SPECIFIC FIELDS
-    fabric: { type: String, required: true },         // Cotton, Satin etc.
-    bedsheetSize: { type: String, required: true },   // Single, Double, King, Queen 
+    fabric: { type: String,  },
+    bedsheetSize: { type: String,  },
 
     description: {
       type: String,
@@ -36,6 +34,13 @@ const productSchema = new mongoose.Schema(
     subImages: {
       type: [String],
       default: [],
+    },
+
+    bestSeller: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "BestSeller",
+      required: false,
+      default: null,
     },
 
     likedBy: [
