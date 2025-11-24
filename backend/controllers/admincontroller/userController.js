@@ -402,9 +402,11 @@ exports.importProduct = async (req, res) => {
       price,
       description,
       fabric,
-      bedsheetSize,
+   
       categoryId,
-      colors
+      bestSellerId,
+      colors,
+    
     } = req.body;
 
     const BASE_URL = getBaseUrl(req);
@@ -430,9 +432,10 @@ exports.importProduct = async (req, res) => {
       price,
       description,
       fabric,
-      bedsheetSize,
+   
     
       categoryId,
+      bestSellerId,
       colors: Array.isArray(colors) ? colors : [colors],
       mainImage,
       subImages,
@@ -632,7 +635,7 @@ exports.deleteproductById = async (req, res) => {
 
 exports.editProductById = async (req, res) => {
   try {
-    const { name, title, price, colors, description, fabric, bedsheetSize } = req.body;
+    const { name, title, price, colors, description, fabric } = req.body;
     const productId = req.params.id;  // ✅ yaha req hoga, res nahi
 
     if (!productId) {
@@ -656,7 +659,7 @@ exports.editProductById = async (req, res) => {
     if (price !== undefined) product.price = price;
     if (description !== undefined) product.description = description;
     if (fabric !== undefined) product.fabric = fabric;
-    if (bedsheetSize !== undefined) product.bedsheetSize = bedsheetSize;
+
 
 
     // ---------- COLORS HANDLE (string ya array dono) ----------

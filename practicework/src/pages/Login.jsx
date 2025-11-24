@@ -45,7 +45,7 @@ const { login } = useAuth();
       toast.success(response.data.message || "Login Successful!");
 
       // 👇 Save token & role in context/localStorage
-      login(response.data.token, response.data.user.role);
+      login(response.data.token, response.data.user.role, response.data.user.email);
 
       // 👇 Redirect according to role
       setTimeout(() => {

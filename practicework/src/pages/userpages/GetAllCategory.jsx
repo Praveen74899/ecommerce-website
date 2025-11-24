@@ -111,11 +111,7 @@ useEffect(() => {
                     </p>
                   )}
 
-                  {product.bedsheetSize && (
-                    <p className="text-xs text-gray-500">
-                      Size: {product.bedsheetSize}
-                    </p>
-                  )}
+                
                 </div>
               </div>
             ))}

@@ -19,7 +19,7 @@ const productSchema = new mongoose.Schema(
     },
 
     fabric: { type: String,  },
-    bedsheetSize: { type: String,  },
+
 
     description: {
       type: String,
@@ -36,7 +36,7 @@ const productSchema = new mongoose.Schema(
       default: [],
     },
 
-    bestSeller: {
+    bestSellerId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "BestSeller",
       required: false,
