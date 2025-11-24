@@ -7,7 +7,8 @@ import { Heart } from "lucide-react";
 import Footer from "../../components/Footer";
 import { jwtDecode } from "jwt-decode";
 import ShopByCategory from "./ShopByCategory";
-import GetAllBestSeller from "./GetAllBestSeller";
+import ShopByBestseller from "./ShopByBestseller";
+import NewArrivals from "./NewArrivals";
 
 const bannerImages = [
   "/bedsheet.jpg",
@@ -129,7 +130,7 @@ const Dashboard = () => {
             Comfort, Style & Luxury Now at Your Home
           </p>
 
-          <button className="mt-4 px-5 py-2 bg-white text-gray-800 font-semibold rounded-lg">
+          <button className="mt-4 px-5 py-2 bg-yellow-600 text-white hover:bg-yellow-800 font-semibold rounded-lg">
             Shop Now
           </button>
         </div>
@@ -155,7 +156,7 @@ const Dashboard = () => {
 
       <ShopByCategory />
 
-      <GetAllBestSeller/>
+      <ShopByBestseller/>
 
       {/* Dashboard Content */}
 

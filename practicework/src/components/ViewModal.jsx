@@ -3,24 +3,45 @@ import React from 'react';
 
 const ViewUserForm = ({ user, onClose }) => {
   return (
-    <div className="fixed inset-0 flex justify-center items-center bg-gray-200 bg-opacity-50">
-      <div className="bg-white shadow-lg p-6 rounded-md w-96 ml-4 border-l-4 border-gray-600"> {/* Added left border */}
-        <h2 className="text-2xl font-semibold mb-4 shadow-md p-3">User Details</h2>
+    <div className="fixed inset-0 flex justify-center items-center z-50">
+
+      {/* Background blur + light dim */}
+      <div className="fixed inset-0 bg-black/20 backdrop-blur-sm"></div>
+
+      {/* Modal Box */}
+      <div className="bg-white shadow-2xl p-6 rounded-xl w-96 ml-4 border border-gray-300 relative z-50">
+
+        {/* Header */}
+        <h2 className="text-2xl font-semibold mb-4 border-b pb-2 text-gray-800">
+          User Details
+        </h2>
+
+        {/* Details */}
         <div className="mb-4">
-          <label className="block text-gray-700">Name</label>
-          <p>{user.forname} {user.surname}</p>
+          <label className="block text-gray-500 text-sm">Name</label>
+          <p className="text-gray-900 font-medium mt-1">{user.forname} {user.surname}</p>
         </div>
+
         <div className="mb-4">
-          <label className="block text-gray-700">Email</label>
-          <p>{user.email}</p>
+          <label className="block text-gray-500 text-sm">Email</label>
+          <p className="text-gray-900 font-medium mt-1">{user.email}</p>
         </div>
+
         <div className="mb-4">
-          <label className="block text-gray-700">Role</label>
-          <p>{user.role}</p>
+          <label className="block text-gray-500 text-sm">Role</label>
+          <p className="text-gray-900 font-medium mt-1 capitalize">{user.role}</p>
         </div>
-        <div className="flex justify-end">
-          <button onClick={onClose} className="bg-gray-600 text-white px-4 py-2 rounded-md">Close</button>
+
+        {/* Close Button */}
+        <div className="flex justify-end mt-6">
+          <button
+            onClick={onClose}
+            className="bg-gray-700 text-white px-5 py-2 rounded-md hover:bg-gray-900 transition"
+          >
+            Close
+          </button>
         </div>
+
       </div>
     </div>
   );

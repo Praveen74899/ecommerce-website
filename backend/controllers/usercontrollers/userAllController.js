@@ -1,5 +1,6 @@
 const products = require("../../models/uploadmodel.js")
   const BestSeller = require("../../models/bestseller.js");
+  
 exports.getAllProductsForUser = async (req, res) => {
   try {
       console.log("Controller hit");
@@ -123,6 +124,17 @@ exports.getBestSeller = async (req,res) => {
 
 
 
+exports.getAllbestsellerbyid = async (req, res) => {
+  try {
+    const bestSellerId = req.params.id;
+    const product = await products.find({ bestSeller: bestSellerId });
+    res.status(200).json({ success: true, message: "BestSeller products fetched successfully", product });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+
 exports.getAllNewArrival = async (req,res) => {
   try{
   const newArrival = await products.find().sort({ createdAt: -1 }).limit(10);
@@ -136,3 +148,14 @@ exports.getAllNewArrival = async (req,res) => {
     res.status(500).json({success: false, message: error.message});
   }
 }
+
+
+exports.getSearchProduct = async (req, res) => {
+  try {
+    const { key } = req.params;
+    const product = await products.find({ $text: { $search: key } });
+    res.status(200).json({ success: true, message: "Search product fetched successfully", product });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};

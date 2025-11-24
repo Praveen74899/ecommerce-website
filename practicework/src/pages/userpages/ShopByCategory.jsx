@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import API from "../../utils/api";
 import { useNavigate } from "react-router-dom";
+import Footer from "../../components/Footer";
 
 
 const ShopByCategory = () => {
   const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
-
+const isPage = location.pathname === "/shopbycategory";
   useEffect(() => {
     API.get("/admin/categories")
       .then((res) => {
@@ -24,6 +25,7 @@ useEffect(() => {
 }, []);
 
   return (
+    <>
     <div className="max-w-7xl mx-auto px-4 md:px-6 my-10">
      <div className="flex justify-between">
        <h2 className="text-2xl font-semibold text-gray-800 mb-4 border-b-4 border-yellow-500 inline-block pb-1">
@@ -66,6 +68,9 @@ useEffect(() => {
       </div>
 
     </div>
+    {isPage && <Footer />}
+
+    </>
   );
 };
 

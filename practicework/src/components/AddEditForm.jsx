@@ -3,20 +3,16 @@ import { toast } from 'react-toastify';
 import API from '../utils/api';
 
 const AddEditForm = ({ onClose, onUserAdded, user }) => {
-  
-  
-  // Initial form data state
+
   const [formData, setFormData] = useState({
     forname: '',
     surname: '',
     email: '',
-    role: '', // Default role is 'user'
+    role: '',
   });
 
-  // Loading state to handle button disable
   const [loading, setLoading] = useState(false);
 
-  // Pre-fill the form with user data when the user prop changes (for editing)
   useEffect(() => {
     if (user) {
       setFormData({
@@ -28,80 +24,95 @@ const AddEditForm = ({ onClose, onUserAdded, user }) => {
     }
   }, [user]);
 
-  // Form submit handler
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true); // Show loading state
+    setLoading(true);
 
     try {
       const response = await API.put(`/users/${user ? user._id : ''}`, formData);
-      toast.success(response.data.message || "User update successfully");
+      toast.success(response.data.message || "User updated successfully");
 
-      onUserAdded(); // Re-fetch users after adding or editing
-      onClose(); // Close the modal
+      onUserAdded();
+      onClose();
     } catch (error) {
       toast.error(error.response?.data?.message || "Error occurred");
     } finally {
-      setLoading(false); // Hide loading state after submission
+      setLoading(false);
     }
   };
 
   return (
-   <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-  <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-    <form onSubmit={handleSubmit}>
-      <div className="mb-4">
-        <label className="block font-semibold mb-1 text-gray-700">Name</label>
-        <input
-          type="text"
-          value={formData.forname}
-          onChange={(e) => setFormData({ ...formData, forname: e.target.value })}
-          required
-          className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-gray-500"
-        />
+    <div className="fixed inset-0 flex justify-center items-center z-50">
+
+      {/* Background blur + light dim */}
+      <div className="fixed inset-0 bg-black/20 backdrop-blur-sm"></div>
+
+      {/* Modal Box */}
+      <div className="bg-white rounded-xl shadow-2xl w-96 p-6 relative z-50 border border-gray-300">
+
+        {/* Header */}
+        <div className="flex justify-between items-center mb-4 border-b pb-2">
+          <h2 className="text-xl font-semibold text-gray-800">
+            {user ? "Edit User" : "Add User"}
+          </h2>
+
+          <button
+            onClick={onClose}
+            className="text-gray-500 hover:text-gray-800 text-lg"
+          >
+            ✕
+          </button>
+        </div>
+
+        {/* FORM */}
+        <form onSubmit={handleSubmit}>
+
+          <div className="mb-4">
+            <label className="block text-gray-600 text-sm mb-1">Name</label>
+            <input
+              type="text"
+              value={formData.forname}
+              onChange={(e) => setFormData({ ...formData, forname: e.target.value })}
+              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-gray-500"
+              required
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-gray-600 text-sm mb-1">Surname</label>
+            <input
+              type="text"
+              value={formData.surname}
+              onChange={(e) => setFormData({ ...formData, surname: e.target.value })}
+              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-gray-500"
+              required
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-gray-600 text-sm mb-1">Email</label>
+            <input
+              type="email"
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-gray-500"
+              required
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className={`w-full py-2 mt-4 rounded-md text-white ${
+              loading ? 'bg-gray-300 cursor-not-allowed' : 'bg-gray-700 hover:bg-gray-900'
+            } transition`}
+          >
+            {loading ? 'Saving...' : user ? 'Update User' : 'Add User'}
+          </button>
+        </form>
+
       </div>
-
-      <div className="mb-4">
-        <label className="block font-semibold mb-1 text-gray-700">Surname</label>
-        <input
-          type="text"
-          value={formData.surname}
-          onChange={(e) => setFormData({ ...formData, surname: e.target.value })}
-          required
-          className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-gray-500"
-        />
-      </div>
-
-      <div className="mb-4">
-        <label className="block font-semibold mb-1 text-gray-700">Email</label>
-        <input
-          type="email"
-          value={formData.email}
-          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-          required
-          className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-gray-500"
-        />
-      </div>
-
-      <button
-        type="submit"
-        disabled={loading} // Disable button when submitting
-        className={`w-full py-2 mt-4 rounded-md ${loading ? 'bg-gray-300' : 'bg-gray-600 hover:bg-gray-700'} text-white`}
-      >
-        {loading ? 'Saving...' : (user ? 'Update' : 'Add')} User
-      </button>
-    </form>
-
-    {/* Close Button */}
-    <button
-      onClick={onClose}
-      className="mt-4 text-gray-500 hover:text-gray-700 font-medium"
-    >
-      Close
-    </button>
-  </div>
-</div>
-
+    </div>
   );
 };
 

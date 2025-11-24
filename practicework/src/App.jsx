@@ -19,6 +19,10 @@ import ShopByCategory from "./pages/userpages/ShopByCategory";
 import About from "./pages/userpages/About";
 import BestSeller from "./pages/adminpages/BestSeller";
 import GetAllBestSeller from "./pages/userpages/GetAllBestSeller";
+import ShopByBestseller from "./pages/userpages/ShopByBestseller";
+import NewArrivals from "./pages/userpages/NewArrivals";
+import Profile from "./pages/userpages/profile";
+import UserSettings from "./pages/userpages/Setting";
 function App() {
   return (
 <BrowserRouter>
@@ -30,14 +34,22 @@ function App() {
       <Route path="dashboard" element={<Userdashboard />} />
       <Route path="oneproduct/:id" element={<OneProduct />} />
       <Route path="shopbycategory" element={<ShopByCategory />} />
+      <Route path="shopbybestseller" element={<ShopByBestseller />} />
       <Route path="getallcategory/:id" element={<GetAllCategory />} />
-      <Route path="getallbestseller" element={<GetAllBestSeller />} />
-       <Route path="/about" element={<About />} />
+      <Route path="getallbestseller/:id" element={<GetAllBestSeller />} />
+
+<Route path="newarrivals" element={<NewArrivals  />} />
+
+       <Route path="about" element={<About />} />
     </Route>
 
     {/* 🔐 Login / Signup */}
     <Route path="/login" element={<Login />} />
     <Route path="/signup" element={<Signup />} />
+
+<Route path="/profile" element={<Profile />} />
+<Route path="/settings" element={<UserSettings />} />
+
 
     {/* 🔐 Admin Protected */}
    <Route element={<ProtectedRoute allowedRoles={['admin']} />}>

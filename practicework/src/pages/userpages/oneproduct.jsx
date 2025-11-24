@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const OneProduct = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
+const navigate = useNavigate();
+
+ const token = localStorage.getItem("token");
 
   const [mainImage, setMainImage] = useState("");
 
@@ -40,6 +44,27 @@ const OneProduct = () => {
   if (loading) return <p className="p-5 text-lg">Loading...</p>;
   if (!product) return <p className="p-5 text-lg">Product not found</p>;
 
+
+const handleAddToCart = () => {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    navigate("/login");
+    return;
+  }
+
+  console.log("Add to cart logic chalu hai...");
+};
+const handleBuyNow = () => {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    navigate("/login");
+    return;
+  }
+
+  console.log("Buy now logic chalu hai...");
+};
 
 
   return (
@@ -134,12 +159,20 @@ const OneProduct = () => {
 
         {/* BUTTONS */}
         <div className="mt-8 flex gap-5">
-          <button className="bg-yellow-500 text-black px-6 py-3 rounded-lg font-semibold hover:bg-yellow-600 shadow">
-            Add to Cart
-          </button>
-          <button className="bg-orange-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-orange-700 shadow">
-            Buy Now
-          </button>
+         <button
+  onClick={handleAddToCart}
+  className="bg-yellow-500 text-black px-6 py-3 rounded-lg font-semibold hover:bg-yellow-600 shadow"
+>
+  Add to Cart
+</button>
+
+<button
+  onClick={handleBuyNow}
+  className="bg-orange-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-orange-700 shadow"
+>
+  Buy Now
+</button>
+
         </div>
       </div>
     </div>

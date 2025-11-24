@@ -555,23 +555,67 @@ exports.updateCategoryStatus = async (req, res) => {
 };
 
 
+// exports.editCategory = async (req, res) => {
+//   try {
+//     const { name } = req.body;
+//         const BASE_URL = getBaseUrl(req);
+//     const image = `${BASE_URL}/${req.file.path}`; 
+
+//     const updated = await Category.findByIdAndUpdate(
+//       req.params.id,
+//       { name, image },
+//       { new: true }
+//     );
+
+//     res.json({ success: true, message: "Category updated", updated });
+//   } catch (error) {
+//     res.status(500).json({ success: false, message: error.message });
+//   }
+// };  
 exports.editCategory = async (req, res) => {
   try {
-    const { name, } = req.body;
-        const BASE_URL = getBaseUrl(req);
-    const image = `${BASE_URL}/${req.file.path}`; 
+    const { name, existingImage } = req.body;
 
-    const updated = await Category.findByIdAndUpdate(
+    const BASE_URL = getBaseUrl(req);
+    let imagePath;
+
+    // ⭐ If NEW image uploaded
+    if (req.file) {
+      imagePath = `${BASE_URL}/${req.file.path.replace(/\\/g, "/")}`;
+    }
+
+    // ⭐ If NO new image, use existing one
+    else {
+      // If existingImage already full URL → keep as it is
+      if (existingImage.startsWith("http://") || existingImage.startsWith("https://")) {
+        imagePath = existingImage;
+      } 
+      else {
+        // If existingImage is just filename or relative
+        imagePath = `${BASE_URL}/${existingImage}`;
+      }
+    }
+
+    // ⭐ Update Category
+    await Category.findByIdAndUpdate(
       req.params.id,
-      { name, image },
+      { name, image: imagePath },
       { new: true }
     );
 
-    res.json({ success: true, message: "Category updated", updated });
+    res.json({
+      success: true,
+      message: "Category updated successfully",
+    });
+
   } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
   }
-};  
+};
 
 
 
@@ -719,6 +763,55 @@ exports.updatebestsellerStatus = async (req,res) =>{
   }
 }
 
+const path = require("path");
+const fs = require("fs");
+
+exports.editBestSeller = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const { name, existingImage } = req.body;
+
+    const BASE_URL = `${req.protocol}://${req.get("host")}`;
+
+    const item = await BestSeller.findById(id);
+    if (!item) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Item not found" });
+    }
+
+    // Update name
+    if (name) item.name = name;
+
+    // New image upload case
+    if (req.file) {
+      // OLD FILE DELETE (if stored locally)
+      if (item.image) {
+        const oldFileName = item.image.replace(BASE_URL, "").trim();
+        const oldPath = path.join(__dirname, "..", oldFileName);
+
+        if (fs.existsSync(oldPath)) {
+          fs.unlinkSync(oldPath);
+        }
+      }
+
+      // SET NEW IMAGE WITH BASE_URL
+      item.image = `${BASE_URL}/uploads/${req.file.filename}`;
+    } else {
+      // NO NEW FILE → keep existing image from body
+      if (existingImage) item.image = existingImage;
+    }
+
+    await item.save();
+
+    res.json({ success: true, message: "BestSeller updated!", bestSeller: item });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
 
 
 
@@ -772,13 +865,11 @@ const subImages = req.files?.subImages
 
 
 
-
-exports.getAllbestsellerbyid = async (req, res) => {
+exports.getallbestcellerproductbyid = async (req, res) => {
   try {
-    const bestSellerId = req.params.id;
-    const products = await Product.find({ bestSeller: bestSellerId });
-    res.status(200).json({ success: true, message: "BestSeller products fetched successfully", products });
+    const products = await Product.find({ bestSeller: req.params.id });
+    res.status(200).json({ success: true, products });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
-};
+}

@@ -66,57 +66,145 @@ export default function SignUp() {
     }
   };
 
-  return (
-    <div className="flex justify-center bg-gray-100 items-center h-screen ">
-      <div className="bg-white p-8 rounded-2xl shadow-lg w-96 ">
-        <h2 className="text-2xl font-semibold text-center mb-6">Sign Up</h2>
-        <form onSubmit={handleSignUp}>
-          <input
-            type="text"
-            placeholder="Enter First Name"
-            value={forname}
-            onChange={(e) => setForname(e.target.value)}
-            className="w-full p-2 mb-4 border rounded focus:outline-none focus:ring-2 focus:ring-gray-500"
-          />
-          <input
-            type="text"
-            placeholder="Enter Last Name"
-            value={surname}
-            onChange={(e) => setSurname(e.target.value)}
-            className="w-full p-2 mb-4 border rounded focus:outline-none focus:ring-2 focus:ring-gray-500"
-          />
-          <input
-            type="email"
-            placeholder="Enter Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full p-2 mb-4 border rounded focus:outline-none focus:ring-2 focus:ring-gray-500"
-          />
-          <input
-            type="password"
-            placeholder="Enter Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full p-2 mb-4 border rounded focus:outline-none focus:ring-2 focus:ring-gray-500"
-          />
+  // return (
+  //   <div className="flex justify-center bg-gray-100 items-center h-screen ">
+  //     <div className="bg-white p-8 rounded-2xl shadow-lg w-96 ">
+  //       <h2 className="text-2xl font-semibold text-center mb-6">Sign Up</h2>
+  //       <form onSubmit={handleSignUp}>
+  //         <input
+  //           type="text"
+  //           placeholder="Enter First Name"
+  //           value={forname}
+  //           onChange={(e) => setForname(e.target.value)}
+  //           className="w-full p-2 mb-4 border rounded focus:outline-none focus:ring-2 focus:ring-gray-500"
+  //         />
+  //         <input
+  //           type="text"
+  //           placeholder="Enter Last Name"
+  //           value={surname}
+  //           onChange={(e) => setSurname(e.target.value)}
+  //           className="w-full p-2 mb-4 border rounded focus:outline-none focus:ring-2 focus:ring-gray-500"
+  //         />
+  //         <input
+  //           type="email"
+  //           placeholder="Enter Email"
+  //           value={email}
+  //           onChange={(e) => setEmail(e.target.value)}
+  //           className="w-full p-2 mb-4 border rounded focus:outline-none focus:ring-2 focus:ring-gray-500"
+  //         />
+  //         <input
+  //           type="password"
+  //           placeholder="Enter Password"
+  //           value={password}
+  //           onChange={(e) => setPassword(e.target.value)}
+  //           className="w-full p-2 mb-4 border rounded focus:outline-none focus:ring-2 focus:ring-gray-500"
+  //         />
          
-          <button
-            type="submit"
-            className="w-full bg-gray-600 text-white py-2 rounded hover:bg-gray-700 transition"
-          >
-            Sign Up
-          </button>
-        </form>
-        <div className="text-center mt-4"></div>
-          <span className="text-sm">Already have an account? </span>
-          <button
-            onClick={() => navigate("/login")}
-            className="text-blue-500 underline"
-          >
-            Login
-          </button>
+  //         <button
+  //           type="submit"
+  //           className="w-full bg-gray-600 text-white py-2 rounded hover:bg-gray-700 transition"
+  //         >
+  //           Sign Up
+  //         </button>
+  //       </form>
+  //       <div className="text-center mt-4"></div>
+  //         <span className="text-sm">Already have an account? </span>
+  //         <button
+  //           onClick={() => navigate("/login")}
+  //           className="text-blue-500 underline"
+  //         >
+  //           Login
+  //         </button>
+  //     </div>
+
+  //   </div>
+  // );
+
+  return (
+  <div className="flex justify-center items-center h-screen bg-yellow-50">
+    <div className="bg-white p-8 rounded-2xl shadow-xl w-96 border-t-4 border-yellow-600">
+
+      {/* Heading */}
+      <h2 className="text-3xl font-bold text-center mb-5 text-yellow-700">
+        Create Account
+      </h2>
+      <p className="text-center text-gray-600 mb-6">
+        Join Soft Home Essentials
+      </p>
+
+      <form onSubmit={handleSignUp}>
+
+        {/* First Name */}
+        <input
+          type="text"
+          placeholder="Enter First Name"
+          value={forname}
+          onChange={(e) => setForname(e.target.value)}
+          className="w-full p-3 mb-4 border border-gray-300 rounded-lg 
+                     focus:outline-none focus:ring-2 focus:ring-yellow-500"
+        />
+
+        {/* Last Name */}
+        <input
+          type="text"
+          placeholder="Enter Last Name"
+          value={surname}
+          onChange={(e) => setSurname(e.target.value)}
+          className="w-full p-3 mb-4 border border-gray-300 rounded-lg 
+                     focus:outline-none focus:ring-2 focus:ring-yellow-500"
+        />
+
+        {/* Email */}
+        <input
+          type="email"
+          placeholder="Enter Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="w-full p-3 mb-4 border border-gray-300 rounded-lg 
+                     focus:outline-none focus:ring-2 focus:ring-yellow-500"
+        />
+
+        {/* Password */}
+        <input
+          type="password"
+          placeholder="Enter Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="w-full p-3 mb-4 border border-gray-300 rounded-lg 
+                     focus:outline-none focus:ring-2 focus:ring-yellow-500"
+        />
+
+        {/* Signup Button */}
+        <button
+          type="submit"
+          className="w-full bg-yellow-600 text-white py-2.5 rounded-lg 
+                     hover:bg-yellow-700 transition font-semibold shadow"
+        >
+          Sign Up
+        </button>
+      </form>
+
+      {/* Divider */}
+      <div className="flex items-center my-5">
+        <div className="flex-1 h-px bg-gray-300"></div>
+        <span className="px-2 text-gray-500 text-sm">OR</span>
+        <div className="flex-1 h-px bg-gray-300"></div>
+      </div>
+
+      {/* Login Link */}
+      <div className="text-center">
+        <span className="text-gray-600 text-sm">Already have an account? </span>
+        <button
+          onClick={() => navigate("/login")}
+          className="text-yellow-700 font-semibold hover:underline"
+        >
+          Login
+        </button>
       </div>
 
     </div>
-  );
+  </div>
+);
+
+
 }

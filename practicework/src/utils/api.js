@@ -18,10 +18,10 @@ API.interceptors.request.use(
       config.headers.Authorization = `Bearer ${token}`;
     }
 
-    if(!token){
-      toast.error("token Expired!");
-      window.location.href = "/login";
-    }
+    // if(!token){
+    //   toast.error("token Expired!");
+    //   window.location.href = "/login";
+    // }
    
     return config;
   },

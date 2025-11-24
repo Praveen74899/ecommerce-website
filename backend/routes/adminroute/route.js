@@ -10,7 +10,7 @@ const { createUser, editUser, getAllUsers, deleteUser, signupUser,
      importProduct ,getAllProducts, addCategory,getAllCategories,categoryidDelete ,
      editCategory,updateCategoryStatus ,deleteproductById,editProductById,bestSeller,
     getBestSeller,deletebestsellerById,updatebestsellerStatus,addProductToBestSeller
-  ,getAllbestsellerbyid} = require("../../controllers/admincontroller/userController");
+ ,editBestSeller,getallbestcellerproductbyid } = require("../../controllers/admincontroller/userController");
 
 
      // step 2 hai image  upload on multer 
@@ -53,8 +53,10 @@ router.post("/admin/bestseller", authMiddleware, singleImageUpload, bestSeller);
 router.get("/admin/getbestseller", authMiddleware, getBestSeller);
 router.delete("/admin/deletebestseller/:id", authMiddleware, deletebestsellerById);
 router.patch("/admin/bestseller/status/:id", authMiddleware, updatebestsellerStatus);
+router.put("/admin/editbestseller/:id", authMiddleware, singleImageUpload, editBestSeller);
 router.post("/admin/addproducttobestseller/:id", authMiddleware, productImageUpload , addProductToBestSeller);
-router.get("/admin/getallbestsellerproductbyid/:id", authMiddleware, getAllbestsellerbyid);
+router.get("/admin/getallbestcellerproductbyid/:id", authMiddleware, getallbestcellerproductbyid);
+
 
 
 
