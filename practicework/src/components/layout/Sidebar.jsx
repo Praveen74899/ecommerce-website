@@ -95,81 +95,170 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
   ];
 
   return (
-    <>
-      {/* DESKTOP SIDEBAR */}
-      <div className="hidden md:flex flex-col w-64 bg-[#faf7f2]  shadow-md border-b border-yellow-200  text-gray-700 p-6 h-screen sticky top-0">
-       <h2 className="text-2xl font-bold text-gray-800 tracking-wide mb-8">
-  Admin<span className="text-yellow-600"> Panel</span>
-</h2>
+//     <>
+//       {/* DESKTOP SIDEBAR */}
+//       <div className="hidden md:flex flex-col w-64 bg-[#faf7f2]  shadow-md border-b border-yellow-200  text-gray-700 p-6 h-screen sticky top-0">
+//        <h2 className="text-2xl font-bold text-gray-800 tracking-wide mb-8">
+//   Admin<span className="text-yellow-600"> Panel</span>
+// </h2>
 
 
-        <nav className="space-y-3">
-          {menuItems.map((item) => (
-            <Link
-              key={item.path}
-              to={item.path}
-              className={`block p-3 rounded-lg transition text-lg 
-                ${isActive(item.path)
-                ? "bg-yellow-100 text-yellow-700 font-semibold"
-                : "hover:bg-gray-100 text-gray-700"}
-              `}
-            >
-              {item.name}
-            </Link>
-          ))}
-        </nav>
-      </div>
+//         <nav className="space-y-3">
+//           {menuItems.map((item) => (
+//             <Link
+//               key={item.path}
+//               to={item.path}
+//               className={`block p-3 rounded-lg transition text-lg 
+//                 ${isActive(item.path)
+//                 ? "bg-gray-200 text-yellow-700 font-semibold"
+//                 : "hover:bg-gray-100 text-gray-700"}
+//               `}
+//             >
+//               {item.name}
+//             </Link>
+//           ))}
+//         </nav>
+//       </div>
 
-      {/* MOBILE SIDEBAR */}
-      <div
-        className={`
-          fixed inset-y-0 left-0 w-60 bg-white p-6 text-gray-700
-          transform ${isOpen ? "translate-x-0" : "-translate-x-full"}
-          transition-transform duration-300 md:hidden z-[9999] shadow-xl
-        `}
-      >
-        {/* HEADER */}
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-semibold text-gray-800">Admin Panel</h2>
-          <button onClick={() => setIsOpen(false)}>
-            <X size={26} />
-          </button>
-        </div>
+//       {/* MOBILE SIDEBAR */}
+//       <div
+//         className={`
+//           fixed inset-y-0 left-0 w-60 bg-white p-6 text-gray-700
+//           transform ${isOpen ? "translate-x-0" : "-translate-x-full"}
+//           transition-transform duration-300 md:hidden z-[9999] shadow-xl
+//         `}
+//       >
+//         {/* HEADER */}
+//         <div className="flex justify-between items-center mb-6">
+//           <h2 className="text-xl font-semibold text-gray-800">Admin Panel</h2>
+//           <button onClick={() => setIsOpen(false)}>
+//             <X size={26} />
+//           </button>
+//         </div>
 
-        {/* LINKS */}
-        <nav className="space-y-3">
-          {menuItems.map((item) => (
-            <Link
-              key={item.path}
-              to={item.path}
-              onClick={() => setIsOpen(false)}
-              className="block p-3 rounded-lg text-lg hover:bg-gray-100"
-            >
-              {item.name}
-            </Link>
-          ))}
+//         {/* LINKS */}
+//         <nav className="space-y-3">
+//           {menuItems.map((item) => (
+//             <Link
+//               key={item.path}
+//               to={item.path}
+//               onClick={() => setIsOpen(false)}
+//               className="block p-3 rounded-lg text-lg hover:bg-gray-100"
+//             >
+//               {item.name}
+//             </Link>
+//           ))}
 
-          {/* LOGOUT */}
-          <button
-            onClick={() => {
-              handleLogout();
-              setIsOpen(false);
-            }}
-            className="w-full mt-3 bg-red-500 text-white p-3 rounded-lg hover:bg-red-600"
-          >
-            Logout
-          </button>
-        </nav>
-      </div>
+//           {/* LOGOUT */}
+//           <button
+//             onClick={() => {
+//               handleLogout();
+//               setIsOpen(false);
+//             }}
+//             className="w-full mt-3 bg-red-500 text-white p-3 rounded-lg hover:bg-red-600"
+//           >
+//             Logout
+//           </button>
+//         </nav>
+//       </div>
 
-      {/* OVERLAY */}
-      {isOpen && (
-        <div
+//       {/* OVERLAY */}
+//       {isOpen && (
+//         <div
+//           onClick={() => setIsOpen(false)}
+//           className="fixed inset-0 bg-black/40 md:hidden"
+//         />
+//       )}
+//     </>
+
+
+<>
+  {/* DESKTOP SIDEBAR */}
+  <div className="
+    hidden md:flex flex-col w-64 
+    bg-[#5D4037] text-white 
+    shadow-xl 
+    p-6 h-screen 
+    sticky top-0
+  ">
+    <h2 className="text-2xl font-bold tracking-wide mb-8">
+      Admin <span className="text-[#D7CCC8]">Panel</span>
+    </h2>
+
+    <nav className="space-y-2">
+      {menuItems.map((item) => (
+        <Link
+          key={item.path}
+          to={item.path}
+          className={`
+            block p-3 rounded-lg transition text-lg 
+            ${
+              isActive(item.path)
+                ? "bg-white text-[#4E342E] font-semibold shadow-sm"
+                : "hover:bg-[#6D4C41]"
+            }
+          `}
+        >
+          {item.name}
+        </Link>
+      ))}
+    </nav>
+  </div>
+
+  {/* MOBILE SIDEBAR */}
+  <div
+    className={`
+      fixed inset-y-0 left-0 w-60 
+      bg-white text-gray-700 
+      p-6 
+      transform ${isOpen ? "translate-x-0" : "-translate-x-full"} 
+      transition-transform duration-300 
+      md:hidden z-[9999] shadow-xl
+    `}
+  >
+    {/* Header */}
+    <div className="flex justify-between items-center mb-6">
+      <h2 className="text-xl font-semibold text-gray-800">Admin Panel</h2>
+      <button onClick={() => setIsOpen(false)}>
+        <X size={26} />
+      </button>
+    </div>
+
+    {/* Links */}
+    <nav className="space-y-2">
+      {menuItems.map((item) => (
+        <Link
+          key={item.path}
+          to={item.path}
           onClick={() => setIsOpen(false)}
-          className="fixed inset-0 bg-black/40 md:hidden"
-        />
-      )}
-    </>
+          className="block p-3 rounded-lg text-lg hover:bg-gray-100"
+        >
+          {item.name}
+        </Link>
+      ))}
+
+      {/* Logout */}
+      <button
+        onClick={() => {
+          handleLogout();
+          setIsOpen(false);
+        }}
+        className="w-full mt-3 bg-red-500 text- p-3 rounded-lg hover:bg-red-600"
+      >
+        Logout
+      </button>
+    </nav>
+  </div>
+
+  {/* Overlay */}
+  {isOpen && (
+    <div
+      onClick={() => setIsOpen(false)}
+      className="fixed inset-0 bg-black/40 md:hidden"
+    />
+  )}
+</>
+
   );
 };
 

@@ -610,140 +610,315 @@ const toggleActive = async (user) => {
   }
 
   return (
-    <div className="p-6">
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-5 gap-3">
-        <h2 className="text-2xl lg:text-3xl font-bold mb-0">All Users</h2>
 
-        <div className="flex items-center gap-2">
-          {/* Status filter dropdown */}
-          <select
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            className="border border-gray-300 rounded-md px-2 py-1"
-          >
-            <option value="all">All</option>
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
-          </select>
+  // <div className="p-6  min-h-screen">
 
-          {/* Search input */}
-          <input
-            onChange={searchhandler}
-            type="text"
-            placeholder="Search users..."
-            className="border border-gray-300 rounded-md px-2 py-1"
-          />
+  //   {/* Header Section */}
+  //   <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-5 gap-3">
+  //     <h2 className="text-2xl lg:text-3xl font-bold text-gray-800">
+  //       All Users
+  //     </h2>
 
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="bg-yellow-600 hover:bg-yellow-700 text-white h-9 px-3 rounded"
-          >
-            Add User
-          </button>
-        </div>
-      </div>
+  //     <div className="flex items-center gap-2">
+        
+  //       {/* Status Filter */}
+  //       <select
+  //         value={statusFilter}
+  //         onChange={(e) => setStatusFilter(e.target.value)}
+  //         className="border border-yellow-300 rounded-md px-3 py-1.5 bg-white shadow-sm focus:outline-yellow-600"
+  //       >
+  //         <option value="all">All</option>
+  //         <option value="active">Active</option>
+  //         <option value="inactive">Inactive</option>
+  //       </select>
 
-      {currentUsers.length === 0 ? (
-        <p>No users found.</p>
-      ) : (
-        <div className="sm:overflow-x-auto">
-          <table className="min-w-full table-auto shadow-lg rounded-lg overflow-x-auto">
-            <thead>
-              <tr className="bg-gray-200 text-gray-800">
-                <th className="py-3 px-4 text-left">#</th>   {/* NEW */}
-                <th className="py-3 px-4 text-left">Name</th>
-                <th className="py-3 px-4 text-left">Surname</th>
-                <th className="py-3 px-4 text-left">Email</th>
-                <th className="py-3 px-4 text-left">Role</th>
-                <th className="py-3 px-4 text-left">Status</th>
-                <th className="py-3 px-4 text-left">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {currentUsers.map((u, index) => (
-                <tr key={u._id || index} className="hover:bg-gray-100 bg-white">
-                  <td className="py-3 px-4 font-semibold">{index + 1}</td>
-                  <td className="py-3 px-4">{u.forname}</td>
-                  <td className="py-3 px-4">{u.surname}</td>
-                  <td className="py-3 px-4">{u.email}</td>
-                  <td className="py-3 px-4 capitalize">{u.role}</td>
+  //       {/* Search Bar */}
+  //       <input
+  //         onChange={searchhandler}
+  //         type="text"
+  //         placeholder="Search..."
+  //         className="border border-yellow-300 rounded-md px-3 py-1.5 bg-white shadow-sm focus:outline-yellow-600"
+  //       />
 
-                  {/* Active toggle */}
-                  <td className="py-3 px-4">
-                    <label className="inline-flex items-center cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={u.status === 1}
-                        onChange={() => toggleActive(u)} // Handle toggle active/inactive
-                        className="hidden"
-                      />
-                      <span
-                        className={`w-12 h-6 bg-gray-500 rounded-full inline-block relative transition-all duration-300 ease-in-out ${u.active === 1 ? 'bg-green-600' : 'bg-gray-400'
-                          }`}
-                      >
-                        <span
-                          className={`w-6 h-6 bg-white rounded-full absolute top-0 left-0 transition-all duration-300 ease-in-out transform ${u.active === 1 ? 'translate-x-6' : 'translate-x-0'
-                            }`}
-                        ></span>
-                      </span>
-                    </label>
-                  </td>
+  //       {/* Add User Button */}
+  //       <button
+  //         onClick={() => setIsModalOpen(true)}
+  //         className="bg-yellow-600 hover:bg-yellow-700 text-white h-10 px-4 rounded shadow-md"
+  //       >
+  //         Add User
+  //       </button>
+  //     </div>
+  //   </div>
 
-                  <td className="py-3 px-4 flex space-x-2 lg:space-x-3">
-                    <button onClick={() => handleView(u)} className="cursor-pointer">
-                      <Eye size={20} />
-                    </button>
+  //   {/* No Users */}
+  //   {currentUsers.length === 0 ? (
+  //     <p className="text-gray-700 text-lg">No users found.</p>
+  //   ) : (
+  //     <div className="sm:overflow-x-auto">
+  //       <table className="min-w-full table-auto shadow-md rounded-lg overflow-hidden border border-yellow-200">
+  //         <thead>
+  //           <tr className="bg-[#faf7f2] text-gray-800">
+  //             <th className="py-3 px-4 text-left">#</th>
+  //             <th className="py-3 px-4 text-left">Name</th>
+  //             <th className="py-3 px-4 text-left">Surname</th>
+  //             <th className="py-3 px-4 text-left">Email</th>
+  //             <th className="py-3 px-4 text-left">Role</th>
+  //             <th className="py-3 px-4 text-left">Status</th>
+  //             <th className="py-3 px-4 text-left">Actions</th>
+  //           </tr>
+  //         </thead>
 
-                    <button onClick={() => handleEdit(u)} className="cursor-pointer">
-                      <Edit size={20} />
-                    </button>
+  //         <tbody>
+  //           {currentUsers.map((u, index) => (
+  //             <tr key={u._id || index} className="bg-white hover:bg-gray-50 border-b">
+  //               <td className="py-3 px-4">{index + 1}</td>
+  //               <td className="py-3 px-4">{u.forname}</td>
+  //               <td className="py-3 px-4">{u.surname}</td>
+  //               <td className="py-3 px-4">{u.email}</td>
+  //               <td className="py-3 px-4 capitalize">{u.role}</td>
 
-                    <button
-                      onClick={() => deletehandler(u._id)}
-                      className="text-red-500 hover:text-red-700 cursor-pointer"
-                    >
-                      <Trash size={20} />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+  //               {/* Toggle Button */}
+  //               <td className="py-3 px-4">
+  //                 <label className="inline-flex items-center cursor-pointer">
+  //                   <input
+  //                     type="checkbox"
+  //                     checked={u.status === 1}
+  //                     onChange={() => toggleActive(u)}
+  //                     className="hidden"
+  //                   />
+  //                   <span
+  //                     className={`w-12 h-6 rounded-full inline-block relative transition 
+  //                     ${u.status === 1 ? "bg-green-600" : "bg-gray-400"}`}
+  //                   >
+  //                     <span
+  //                       className={`w-6 h-6 bg-white rounded-full absolute top-0 left-0 transform transition
+  //                       ${u.status === 1 ? "translate-x-6" : "translate-x-0"}`}
+  //                     ></span>
+  //                   </span>
+  //                 </label>
+  //               </td>
 
-      {/* Pagination Controls */}
-      <div className="flex justify-center md:justify-between mt-5 items-center gap-3">
-        <button
-          onClick={handlePrevPage}
-          disabled={currentPage === 1}
-          className="bg-gray-600 text-white px-4 py-2 rounded-md disabled:opacity-50"
-        >
-          Previous
-        </button>
-        <span className="text-sm self-center mx-4">
-          Page {currentPage} of {totalPages}
-        </span>
-        <button
-          onClick={handleNextPage}
-          disabled={currentPage === totalPages}
-          className="bg-gray-600 text-white px-4 py-2 rounded-md disabled:opacity-50"
-        >
-          Next
-        </button>
-      </div>
+  //               {/* Action Buttons */}
+  //               <td className="py-3 px-4 flex space-x-3">
+  //                 <button onClick={() => handleView(u)}>
+  //                   <Eye size={20} className="text-gray-700 hover:text-yellow-600" />
+  //                 </button>
 
-      {isModalOpen && (
-        <AddUserForm onClose={() => setIsModalOpen(false)} onUserAdded={handleUserAdded} />
-      )}
+  //                 <button onClick={() => handleEdit(u)}>
+  //                   <Edit size={20} className="text-gray-700 hover:text-blue-600" />
+  //                 </button>
 
-      {isEditOpen && (
-        <AddEditForm onClose={() => setIsEditOpen(false)} onUserAdded={handleUserAdded} user={selectedUser} />
-      )}
+  //                 <button
+  //                   onClick={() => deletehandler(u._id)}
+  //                   className="text-red-500 hover:text-red-700"
+  //                 >
+  //                   <Trash size={20} />
+  //                 </button>
+  //               </td>
+  //             </tr>
+  //           ))}
+  //         </tbody>
+  //       </table>
+  //     </div>
+  //   )}
 
-      {isViewOpen && <ViewModal user={selectedUser} onClose={() => setIsViewOpen(false)} />}
+  //   {/* Pagination */}
+  //   <div className="flex justify-center md:justify-between mt-5 items-center gap-3">
+      
+  //     <button
+  //       onClick={handlePrevPage}
+  //       disabled={currentPage === 1}
+  //       className="bg-gray-700 text-white px-4 py-2 rounded-md disabled:opacity-50"
+  //     >
+  //       Previous
+  //     </button>
+
+  //     <span className="text-sm mx-3">
+  //       Page {currentPage} of {totalPages}
+  //     </span>
+
+  //     <button
+  //       onClick={handleNextPage}
+  //       disabled={currentPage === totalPages}
+  //       className="bg-gray-700 text-white px-4 py-2 rounded-md disabled:opacity-50"
+  //     >
+  //       Next
+  //     </button>
+
+  //   </div>
+
+  //   {isModalOpen && (
+  //     <AddUserForm onClose={() => setIsModalOpen(false)} onUserAdded={handleUserAdded} />
+  //   )}
+
+  //   {isEditOpen && (
+  //     <AddEditForm onClose={() => setIsEditOpen(false)} user={selectedUser} onUserAdded={handleUserAdded} />
+  //   )}
+
+  //   {isViewOpen && (
+  //     <ViewModal user={selectedUser} onClose={() => setIsViewOpen(false)} />
+  //   )}
+  // </div>
+  <div className="p-6 bg-[#F7F3EF] min-h-screen">
+
+  {/* Header Section */}
+  <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-5 gap-3">
+    <h2 className="text-2xl lg:text-3xl font-bold text-[#4E342E]">
+      All Users
+    </h2>
+
+    <div className="flex items-center gap-2">
+
+      {/* Status Filter */}
+      <select
+        value={statusFilter}
+        onChange={(e) => setStatusFilter(e.target.value)}
+        className="border border-[#8D6E63] rounded-md px-3 py-1.5 bg-white shadow-sm 
+                   focus:outline-none focus:ring-2 focus:ring-[#4E342E]"
+      >
+        <option value="all" >All</option>
+        <option value="active">Active</option>
+        <option value="inactive">Inactive</option>
+      </select>
+
+      {/* Search Bar */}
+      <input
+        onChange={searchhandler}
+        type="text"
+        placeholder="Search..."
+        className="border border-[#8D6E63] rounded-md px-3 py-1.5 bg-white shadow-sm 
+                   focus:outline-none focus:ring-2 focus:ring-[#4E342E]"
+      />
+
+      {/* Add User Button */}
+      <button
+        onClick={() => setIsModalOpen(true)}
+        className="bg-[#4E342E] hover:bg-[#3E2723] text-white h-10 px-4 rounded shadow-md"
+      >
+        Add User
+      </button>
     </div>
-  );
+  </div>
+
+  {/* No Users */}
+  {currentUsers.length === 0 ? (
+    <p className="text-gray-700 text-lg">No users found.</p>
+  ) : (
+    <div className="sm:overflow-x-auto">
+      <table className="min-w-full table-auto shadow-xl rounded-lg overflow-hidden border border-[#D7CCC8]">
+        
+        {/* Table Header */}
+        <thead>
+          <tr className="bg-[#6D4C41] text-white">
+            <th className="py-3 px-4 text-left">#</th>
+            <th className="py-3 px-4 text-left">Name</th>
+            <th className="py-3 px-4 text-left">Surname</th>
+            <th className="py-3 px-4 text-left">Email</th>
+            <th className="py-3 px-4 text-left">Role</th>
+            <th className="py-3 px-4 text-left">Status</th>
+            <th className="py-3 px-4 text-left">Actions</th>
+          </tr>
+        </thead>
+
+        {/* Table Body */}
+        <tbody>
+          {currentUsers.map((u, index) => (
+            <tr key={u._id || index} className="bg-white hover:bg-[#EFEBE9] border-b">
+              
+              <td className="py-3 px-4">{index + 1}</td>
+              <td className="py-3 px-4">{u.forname}</td>
+              <td className="py-3 px-4">{u.surname}</td>
+              <td className="py-3 px-4">{u.email}</td>
+              <td className="py-3 px-4 capitalize">{u.role}</td>
+
+              {/* Toggle Button */}
+              <td className="py-3 px-4">
+                <label className="inline-flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={u.status === 1}
+                    onChange={() => toggleActive(u)}
+                    className="hidden"
+                  />
+                  <span
+                    className={`w-12 h-6 rounded-full inline-block relative transition 
+                    ${u.status === 1 ? "bg-green-600" : "bg-gray-500"}`}
+                  >
+                    <span
+                      className={`w-6 h-6 bg-white rounded-full absolute top-0 left-0 transform transition
+                      ${u.status === 1 ? "translate-x-6" : "translate-x-0"}`}
+                    ></span>
+                  </span>
+                </label>
+              </td>
+
+              {/* Action Buttons */}
+              <td className="py-3 px-4 flex space-x-3">
+                <button onClick={() => handleView(u)}>
+                  <Eye size={20} className="text-[#4E342E] hover:text-[#6D4C41]" />
+                </button>
+
+                <button onClick={() => handleEdit(u)}>
+                  <Edit size={20} className="text-blue-600 hover:text-blue-700" />
+                </button>
+
+                <button
+                  onClick={() => deletehandler(u._id)}
+                  className="text-red-500 hover:text-red-700"
+                >
+                  <Trash size={20} />
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+
+      </table>
+    </div>
+  )}
+
+  {/* Pagination */}
+  <div className="flex justify-center md:justify-between mt-5 items-center gap-3">
+    
+    <button
+      onClick={handlePrevPage}
+      disabled={currentPage === 1}
+      className="bg-[#4E342E] text-white px-4 py-2 rounded-md disabled:opacity-50"
+    >
+      Previous
+    </button>
+
+    <span className="text-sm mx-3 text-[#4E342E]">
+      Page {currentPage} of {totalPages}
+    </span>
+
+    <button
+      onClick={handleNextPage}
+      disabled={currentPage === totalPages}
+      className="bg-[#4E342E] text-white px-4 py-2 rounded-md disabled:opacity-50"
+    >
+      Next
+    </button>
+
+  </div>
+
+  {/* Modals */}
+  {isModalOpen && (
+    <AddUserForm onClose={() => setIsModalOpen(false)} onUserAdded={handleUserAdded} />
+  )}
+
+  {isEditOpen && (
+    <AddEditForm onClose={() => setIsEditOpen(false)} user={selectedUser} onUserAdded={handleUserAdded} />
+  )}
+
+  {isViewOpen && (
+    <ViewModal user={selectedUser} onClose={() => setIsViewOpen(false)} />
+  )}
+
+</div>
+
+);
+    
 };
 
 export default Users;
