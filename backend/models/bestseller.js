@@ -13,6 +13,8 @@ const bestSellerSchema = new mongoose.Schema({
     type: Boolean,
     default: true,   // true = Active, false = Hidden
 }
-})
+},
+{ timestamps: true }
+)
 
 module.exports = mongoose.model("BestSeller", bestSellerSchema);

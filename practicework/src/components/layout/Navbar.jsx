@@ -209,7 +209,7 @@ const Navbar = ({ setIsOpen }) => {
 
     <header className="
   flex items-center justify-between  
-  bg-[#4E342E]  
+  bg-[#4E342E] 
   p-3 shadow-md 
   sticky top-0 
   z-50 

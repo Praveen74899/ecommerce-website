@@ -121,18 +121,18 @@ export default function SignUp() {
   // );
 
   return (
-  <div className="flex justify-center items-center h-screen bg-yellow-50">
-    <div className="bg-white p-8 rounded-2xl shadow-xl w-96 border-t-4 border-yellow-600">
+  <div className="flex justify-center items-center h-screen bg-amber-900">
+    <div className="bg-white p-8 rounded-2xl shadow-xl w-96 border-t-4 border-amber-600">
 
       {/* Heading */}
-      <h2 className="text-3xl font-bold text-center mb-5 text-yellow-700">
+      <h2 className="text-3xl font-bold text-center mb-5 text-amber-900">
         Create Account
       </h2>
       <p className="text-center text-gray-600 mb-6">
         Join Soft Home Essentials
       </p>
 
-      <form onSubmit={handleSignUp}>
+      <form onSubmit={handleSignUp} autoComplete="off">
 
         {/* First Name */}
         <input
@@ -151,17 +151,18 @@ export default function SignUp() {
           value={surname}
           onChange={(e) => setSurname(e.target.value)}
           className="w-full p-3 mb-4 border border-gray-300 rounded-lg 
-                     focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                     focus:outline-none focus:ring-2 focus:ring-amber-900"
         />
 
         {/* Email */}
         <input
           type="email"
           placeholder="Enter Email"
+            autoComplete="new-email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className="w-full p-3 mb-4 border border-gray-300 rounded-lg 
-                     focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                     focus:outline-none focus:ring-2 focus:ring-amber-900"
         />
 
         {/* Password */}
@@ -171,14 +172,14 @@ export default function SignUp() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           className="w-full p-3 mb-4 border border-gray-300 rounded-lg 
-                     focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                     focus:outline-none focus:ring-2 focus:ring-amber-900"
         />
 
         {/* Signup Button */}
         <button
           type="submit"
-          className="w-full bg-yellow-600 text-white py-2.5 rounded-lg 
-                     hover:bg-yellow-700 transition font-semibold shadow"
+          className="w-full bg-amber-900 text-white py-2.5 rounded-lg 
+                     hover:bg-amber-950 transition font-semibold shadow"
         >
           Sign Up
         </button>
@@ -196,7 +197,7 @@ export default function SignUp() {
         <span className="text-gray-600 text-sm">Already have an account? </span>
         <button
           onClick={() => navigate("/login")}
-          className="text-yellow-700 font-semibold hover:underline"
+          className="text-amber-900 font-semibold hover:underline"
         >
           Login
         </button>

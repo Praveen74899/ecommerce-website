@@ -421,7 +421,7 @@ export default function UserNavbar() {
               {/* ABOUT */}
               <button
                 onClick={() => navigate("/about")}
-                className="flex items-center gap-1 hover:text-yellow-600 transition"
+                className="flex items-center gap-1  transition"
               >
                 <Info size={20} />
                 <span>About</span>

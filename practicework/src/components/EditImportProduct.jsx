@@ -112,17 +112,20 @@ const EditImportProduct = ({ selectedProduct, setIsEditOpen, fetchProducts,  }) 
           </div>
 
           {/* FABRIC */}
-          <div className="flex flex-col gap-1">
-            <label className="text-sm font-medium text-gray-700">Fabric</label>
-            <input
-              type="text"
-              name="fabric"
-              value={form.fabric}
-              onChange={handleChange}
-              className="p-3 border rounded-lg w-full"
-              placeholder="Enter fabric"
-            />
-          </div>
+            <div className="flex flex-col">
+                    <label className="text-sm font-medium mb-1 text-gray-600">Fabric</label>
+                    <select
+                      name="fabric"
+                      value={form.fabric}
+                      onChange={handleChange}
+                      className="p-3 rounded-lg w-full bg-white border border-gray-200 shadow-sm focus:ring-2 focus:ring-yellow-400 outline-none"
+                    >
+                      <option value="">Select Fabric</option>
+                      { ["Cotton", "Silk", "Leather", "Denim", "Other"].map((f) => (
+                        <option key={f}>{f}</option>
+                      ))}
+                    </select>
+                  </div>
 
           {/* COLORS */}
           <div className="flex flex-col gap-1">
@@ -145,7 +148,7 @@ const EditImportProduct = ({ selectedProduct, setIsEditOpen, fetchProducts,  }) 
           </div>
 
           {/* BUTTON */}
-          <button className="bg-green-600 text-white w-full py-3 rounded-lg font-semibold">
+          <button className="bg-[#4E342E] hover:bg-[#3E2723] text-white w-full py-3 rounded-lg font-semibold">
             Update Product
           </button>
 

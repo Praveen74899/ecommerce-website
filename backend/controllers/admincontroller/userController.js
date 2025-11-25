@@ -324,37 +324,94 @@ exports.loginUser = async (req, res) => {
 };
 
 
+// exports.getDashboardStats = async (req, res) => {
+//   try {
+
+//     // Get total users count (all users in the database)
+//     const totalUsers = await User.countDocuments();
+
+//     // Get total active users (status: 1)
+//     const activeUsers = await User.countDocuments({ status: 1 });
+
+//     // Get total inactive users (status: 0)
+//     const inactiveUsers = await User.countDocuments({ status: 0 });
+
+//     // Send the response with just the counts
+//     return res.status(200).json({
+//       success: true,
+//       message: 'Dashboard stats fetched successfully',
+//       data: {
+//         totalUsers,
+//         activeUsers,
+//         inactiveUsers
+//       }
+//     });
+//   } catch (error) {
+//     console.error('Error fetching dashboard stats:', error);
+//     return res.status(500).json({
+//       success: false,
+//       message: 'Something went wrong. Please try again later.'
+//     });
+//   }
+// };
+
 exports.getDashboardStats = async (req, res) => {
   try {
-
-    // Get total users count (all users in the database)
+    // --- USERS ---
     const totalUsers = await User.countDocuments();
-
-    // Get total active users (status: 1)
     const activeUsers = await User.countDocuments({ status: 1 });
-
-    // Get total inactive users (status: 0)
     const inactiveUsers = await User.countDocuments({ status: 0 });
 
-    // Send the response with just the counts
+    // --- CATEGORY ---
+    const totalCategories = await Category.countDocuments();
+    const activeCategories = await Category.countDocuments({ status: true });
+    const inactiveCategories = await Category.countDocuments({ status: false });
+
+    // --- BESTSELLER ---
+    const totalBestSellers = await BestSeller.countDocuments();
+    const activeBestSellers = await BestSeller.countDocuments({ status: true });
+    const inactiveBestSellers = await BestSeller.countDocuments({ status: false });
+
+    // --- PRODUCTS (Project) ---
+    const totalProducts = await Product.countDocuments();
+    const activeProducts = await Product.countDocuments({ status: true });
+    const inactiveProducts = await Product.countDocuments({ status: false });
+
     return res.status(200).json({
       success: true,
-      message: 'Dashboard stats fetched successfully',
+      message: "Dashboard stats fetched successfully",
       data: {
-        totalUsers,
-        activeUsers,
-        inactiveUsers
+        users: {
+          total: totalUsers,
+          active: activeUsers,
+          inactive: inactiveUsers
+        },
+        categories: {
+          total: totalCategories,
+          active: activeCategories,
+          inactive: inactiveCategories
+        },
+        bestSellers: {
+          total: totalBestSellers,
+          active: activeBestSellers,
+          inactive: inactiveBestSellers
+        },
+        products: {
+          total: totalProducts,
+          active: activeProducts,
+          inactive: inactiveProducts
+        }
       }
     });
+
   } catch (error) {
-    console.error('Error fetching dashboard stats:', error);
+    console.error("Error fetching dashboard stats:", error);
     return res.status(500).json({
       success: false,
-      message: 'Something went wrong. Please try again later.'
+      message: "Something went wrong. Please try again later."
     });
   }
 };
-
 
 
 
@@ -575,6 +632,52 @@ exports.updateCategoryStatus = async (req, res) => {
 //     res.status(500).json({ success: false, message: error.message });
 //   }
 // };  
+
+// exports.editCategory = async (req, res) => {
+//   try {
+//     const { name, existingImage } = req.body;
+
+//     const BASE_URL = getBaseUrl(req);
+//     let imagePath;
+
+//     // ⭐ If NEW image uploaded
+//     if (req.file) {
+//       imagePath = `${BASE_URL}/${req.file.path.replace(/\\/g, "/")}`;
+//     }
+
+//     // ⭐ If NO new image, use existing one
+//     else {
+//       // If existingImage already full URL → keep as it is
+//       if (existingImage.startsWith("http://") || existingImage.startsWith("https://")) {
+//         imagePath = existingImage;
+//       } 
+//       else {
+//         // If existingImage is just filename or relative
+//         imagePath = `${BASE_URL}/${existingImage}`;
+//       }
+//     }
+
+//     // ⭐ Update Category
+//     await Category.findByIdAndUpdate(
+//       req.params.id,
+//       { name, image: imagePath },
+//       { new: true }
+//     );
+
+//     res.json({
+//       success: true,
+//       message: "Category updated successfully",
+//     });
+
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).json({
+//       success: false,
+//       message: error.message,
+//     });
+//   }
+// };
+
 exports.editCategory = async (req, res) => {
   try {
     const { name, existingImage } = req.body;
@@ -587,15 +690,20 @@ exports.editCategory = async (req, res) => {
       imagePath = `${BASE_URL}/${req.file.path.replace(/\\/g, "/")}`;
     }
 
-    // ⭐ If NO new image, use existing one
+    // ⭐ If NO new image
     else {
-      // If existingImage already full URL → keep as it is
-      if (existingImage.startsWith("http://") || existingImage.startsWith("https://")) {
+      // ⭐ Safe check — existingImage defined hai?
+      if (existingImage && (existingImage.startsWith("http://") || existingImage.startsWith("https://"))) {
         imagePath = existingImage;
-      } 
-      else {
-        // If existingImage is just filename or relative
+      }
+      else if (existingImage) {
+        // If relative or file name
         imagePath = `${BASE_URL}/${existingImage}`;
+      }
+      else {
+        // ⭐ If nothing supplied → DON’T crash, keep image same
+        const oldCategory = await Category.findById(req.params.id);
+        imagePath = oldCategory?.image || ""; 
       }
     }
 
@@ -619,6 +727,8 @@ exports.editCategory = async (req, res) => {
     });
   }
 };
+
+
 
 
 

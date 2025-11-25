@@ -10,3 +10,43 @@
     animation: marquee 12s linear infinite;
   }
 }
+
+.toast-progress-bar {
+  background-color: rgb(120 53 15) !important; /* amber-900 */
+}
+/* Close button icon color (brown) */
+.Toastify__close-button {
+  color: rgb(62 39 35) !important; /* #3E2723 -> dark brown */
+  opacity: 1 !important;
+}
+
+.Toastify__close-button:hover {
+  color: rgb(46 27 23) !important; /* even darker brown */
+}
+
+/* Success Icon → Brown */
+.Toastify__toast--success .Toastify__toast-icon svg {
+  fill: #4E342E !important;  /* dark brown */
+}
+
+/* Error Icon → Brown */
+.Toastify__toast--error .Toastify__toast-icon svg {
+  fill: #4E342E !important;
+}
+
+/* Info Icon → Brown (the blue one tumhe chahiye) */
+.Toastify__toast--info .Toastify__toast-icon svg {
+  fill: #4E342E !important;
+}
+
+/* Warning Icon → Brown */
+.Toastify__toast--warning .Toastify__toast-icon svg {
+  fill: #4E342E !important;
+}
+
+
+/* Progress bar ke peeche ka BLUE background remove → WHITE karo */
+.Toastify__progress-bar--animated.Toastify__progress-bar-theme--light,
+.Toastify__progress-bar-theme--light {
+  background-color: rgb(37, 24, 24) !important;
+}

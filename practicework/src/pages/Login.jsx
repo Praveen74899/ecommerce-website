@@ -105,18 +105,18 @@ const { login } = useAuth();
   //   </div>
   // );
 return (
-  <div className="flex justify-center items-center h-screen bg-yellow-50">
-    <div className="bg-white p-8 rounded-2xl shadow-xl w-96 border-t-4 border-yellow-600">
+  <div className="flex justify-center items-center h-screen bg-amber-900">
+    <div className="bg-white p-8 rounded-2xl shadow-xl w-96 border-t-4 border-amber-900">
 
       {/* Heading */}
-      <h2 className="text-3xl font-bold text-center mb-5 text-yellow-700">
+      <h2 className="text-3xl font-bold text-center mb-5 text-yellow-900">
         Welcome Back
       </h2>
       <p className="text-center text-gray-600 mb-6">
         Login to continue shopping
       </p>
 
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleLogin}   autoComplete="off">
 
         {/* Email */}
         <input
@@ -125,7 +125,7 @@ return (
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className="w-full p-3 mb-4 border border-gray-300 rounded-lg 
-                     focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                     focus:outline-none focus:ring-2 focus:ring-amber-800"
         />
 
         {/* Password */}
@@ -135,14 +135,14 @@ return (
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           className="w-full p-3 mb-4 border border-gray-300 rounded-lg 
-                     focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                     focus:outline-none focus:ring-2 focus:ring-amber-800"
         />
 
         {/* Button */}
         <button
           type="submit"
-          className="w-full bg-yellow-600 text-white py-2.5 rounded-lg 
-                     hover:bg-yellow-700 transition font-semibold shadow"
+          className="w-full bg-amber-900 text-white py-2.5 rounded-lg 
+                     hover:bg-amber-950 transition font-semibold shadow"
         >
           Login
         </button>
@@ -160,7 +160,7 @@ return (
         <span className="text-gray-600 text-sm">Don't have an account? </span>
         <button
           onClick={() => navigate("/signup")}
-          className="text-yellow-700 font-semibold hover:underline"
+          className="text-amber-900 font-semibold hover:underline"
         >
           Sign Up
         </button>

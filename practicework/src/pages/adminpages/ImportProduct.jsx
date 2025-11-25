@@ -508,7 +508,9 @@ import React, { useState, useEffect, useRef } from "react";
 import API from "../../utils/api";
 import { toast } from "react-toastify";
 import { Edit, Trash2 } from "lucide-react";
- import EditImportProduct from "../../components/EditImportProduct";
+import EditImportProduct from "../../components/EditImportProduct";
+import { ChevronRight, ChevronDown } from "lucide-react";
+
 const ImportProduct = () => {
 
   // ---------------------------- STATES ----------------------------
@@ -527,8 +529,8 @@ const ImportProduct = () => {
 
   const [viewType, setViewType] = useState("category"); // 'category' OR 'bestseller'
   const [bestSellerProducts, setBestSellerProducts] = useState([]);
-const [isEditOpen, setIsEditOpen] = useState(false);
-const [selectedProduct, setSelectedProduct] = useState(null);
+  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   const fabricOptions = ["Cotton", "Silk", "Satin", "PolyCotton", "MicroFiber"];
   const colorOptions = ["Red", "Blue", "Black", "White", "Yellow", "Green"];
@@ -641,7 +643,6 @@ const [selectedProduct, setSelectedProduct] = useState(null);
       data.append("price", formData.price);
       data.append("description", formData.description);
       data.append("fabric", formData.fabric);
-    
 
       // append colors array
       formData.colors.forEach((c) => data.append("colors", c));
@@ -671,7 +672,7 @@ const [selectedProduct, setSelectedProduct] = useState(null);
         price: "",
         description: "",
         fabric: "",
-  
+
         colors: [],
         categoryId: "",
         bestSellerId: "",
@@ -715,7 +716,7 @@ const [selectedProduct, setSelectedProduct] = useState(null);
   };
 
 
- 
+
   const handleEdit = (product) => {
     setSelectedProduct(product);
     setIsEditOpen(true);
@@ -723,124 +724,50 @@ const [selectedProduct, setSelectedProduct] = useState(null);
 
   // ---------------------------- UI RETURN ----------------------------
   return (
-    <div className="p-6">
+    <div className="p-6 bg-[#F7F3EF] min-h-screen">
 
       {/* ------------------ HEADER ------------------ */}
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-semibold">All Products</h1>
 
-        <button
-          onClick={() => setShowModal(true)}
-          className="bg-yellow-600 text-white px-5 py-2 rounded-lg"
-        >
-          + Add Product
-        </button>
+        <h1 className="text-2xl font-semibold text-[#4E342E]">
+          All Products
+        </h1>
+
+        <div className="flex items-center gap-3">
+
+          {/* VIEW FILTER */}
+          <select
+            className="border border-[#BCAAA4] p-2 rounded-lg bg-[#6D4C41] 
+                 text-white shadow min-w-[160px] focus:ring-2 
+                  outline-none"
+            value={viewType}
+            onChange={(e) => {
+              setViewType(e.target.value);
+              if (e.target.value === 'bestseller') fetchBestSellerProducts();
+            }}
+          >
+            <option value="category">Category View</option>
+            <option value="bestseller">Best Seller View</option>
+          </select>
+
+          {/* ADD BUTTON */}
+          <button
+            onClick={() => setShowModal(true)}
+            className="bg-[#4E342E] hover:bg-[#3E2723] text-white 
+                 px-5 py-2 rounded-lg shadow-md transition"
+          >
+            + Add Product
+          </button>
+
+        </div>
+
       </div>
+
 
       {/* ------------------ PRODUCT TABLE ------------------ */}
       {/* VIEW FILTER */}
-      <div className="mb-6">
-        <select
-          className="border p-3 rounded-lg bg-white shadow"
-          value={viewType}
-          onChange={(e) => {
-            setViewType(e.target.value);
 
-            if (e.target.value === "bestseller") {
-              fetchBestSellerProducts();
-            }
-          }}
-        >
-          <option value="category">Category View</option>
-          <option value="bestseller">Best Seller View</option>
-        </select>
-      </div>
 
-      {/* CATEGORY WISE UI */}
-      {/* <div className="space-y-4">
-
-  {categories.map((cat) => {
-    const filteredProducts = products.filter(
-      (p) => p.categoryId && p.categoryId._id === cat._id
-    );
-
-    const isOpen = collapsed?.[cat._id] ?? true;
-
-    return (
-      <div key={cat._id} className="rounded-xl shadow bg-white">
-
-        <div
-          className="flex justify-between items-center px-5 py-4 bg-gray-100 cursor-pointer rounded-xl"
-          onClick={() =>
-            setCollapsed((prev) => ({ ...prev, [cat._id]: !isOpen }))
-          }
-        >
-          <h2 className="text-lg font-semibold text-gray-800">{cat.name}</h2>
-
-          <span className="text-xl transition-transform duration-200"
-            style={{ transform: isOpen ? "rotate(90deg)" : "rotate(0deg)" }}
-          >
-            ▶
-          </span>
-        </div>
-
-        {isOpen && (
-          filteredProducts.length > 0 ? (
-            <table className="w-full">
-              <thead>
-                <tr className="text-left text-gray-600 bg-gray-50">
-                  <th className="p-3">Image</th>
-                  <th className="p-3">Name</th>
-                  <th className="p-3">Price</th>
-                  <th className="p-3">Colors</th>
-                  <th className="p-3">Actions</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {filteredProducts.map((p) => (
-                  <tr key={p._id} className="hover:bg-gray-50 shadow-md">
-                    <td className="p-3">
-                      <img
-                        src={p.mainImage}
-                        className="w-14 h-14 object-cover rounded-md"
-                      />
-                    </td>
-                    <td className="p-3">{p.name}</td>
-                    <td className="p-3">₹{p.price}</td>
-                    <td className="p-3">
-                      {p.colors?.length > 0 ? p.colors.join(", ") : "--"}
-                    </td>
-                    <td>
-                      
-                      <button
-                        onClick={() => handleEdit()}
-                        className="p-3 text-blue-600"
-                      >
-                      <Edit />
-                      </button>
-                      
-                      <button
-                        onClick={() => handleDelete(p._id)}
-                        className="p-3 text-red-600"
-                      >
-                      <Trash2 />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          ) : (
-            <div className="p-4 text-gray-500 italic">
-              No products in this category
-            </div>
-          )
-        )}
-      </div>
-    );
-  })}
-</div> */}
 
       <div className="space-y-4">
 
@@ -854,36 +781,116 @@ const [selectedProduct, setSelectedProduct] = useState(null);
             const isOpen = collapsed?.[cat._id] ?? true;
 
             return (
-              <div key={cat._id} className="rounded-xl shadow bg-white">
+              // <div key={cat._id} className="rounded-xl shadow ">
+
+              //   {/* CATEGORY HEADER */}
+              //   <div
+              //     className="flex justify-between items-center px-5 py-4 bg-[#EFEBE9] border border-[#BCAAA4] shadow  cursor-pointer rounded-xl"
+              //     onClick={() =>
+              //       setCollapsed((prev) => ({ ...prev, [cat._id]: !isOpen }))
+              //     }
+              //   >
+              //     <h2 className="text-lg font-semibold text-gray-800">{cat.name}</h2>
+
+              //     <span className="text-xl transition-transform duration-200"
+              //       style={{ transform: isOpen ? "rotate(90deg)" : "rotate(0deg)" }}
+              //     >
+              //       ▶
+              //     </span>
+              //   </div>
+
+              //   {/* PRODUCT LIST */}
+              //   {isOpen && (
+              //     filteredProducts.length > 0 ? (
+              //       <table className="w-full">
+              //         <thead>
+              //           <tr className="text-left bg-[#A1887F] text-white">
+              //             <th className="p-3">Image</th>
+              //             <th className="p-3">Title</th>
+              //             <th className="p-3">Name</th>
+              //             <th className="p-3">Price</th>
+              //                <th className="p-3">Description</th>
+              //           <th className="p-3">fabric</th>
+              //             <th className="p-3">Colors</th>
+              //             <th className="p-3">Actions</th>
+              //           </tr>
+              //         </thead>
+
+              //         <tbody>
+              //           {filteredProducts.map((p) => (
+              //             <tr key={p._id} className="hover:bg-gray-50 shadow-md">
+              //               <td className="p-3">
+              //                 <img
+              //                   src={p.mainImage}
+              //                   className="w-14 h-14 object-cover rounded-md"
+              //                 />
+              //               </td>
+              //               <td className="p-3">{p.title}</td>
+              //               <td className="p-3">{p.name}</td>
+              //               <td className="p-3">INR{p.price}</td>
+              //               <td className="p-3">{p.description}</td>
+              //               <td className="p-3">{p.fabric}</td>
+              //               <td className="p-3">
+              //                 {p.colors?.length > 0 ? p.colors.join(", ") : "--"}
+              //               </td>
+              //               <td>
+
+              //                 <button
+              //                   onClick={() => handleEdit(p)}
+              //                   className="p-3 text-blue-600"
+              //                 >
+              //                   <Edit />
+              //                 </button>
+
+              //                 <button
+              //                   onClick={() => handleDelete(p._id)}
+              //                   className="p-3 text-red-600"
+              //                 >
+              //                   <Trash2 />
+              //                 </button>
+              //               </td>
+              //             </tr>
+              //           ))}
+              //         </tbody>
+              //       </table>
+              //     ) : (
+              //       <div className="p-4 text-gray-500 italic">
+              //         No products in this category
+              //       </div>
+              //     )
+              //   )}
+              // </div>
+              <div key={cat._id} className="rounded-xl shadow bg-[#FAF7F5] border border-[#D7CCC8]">
 
                 {/* CATEGORY HEADER */}
                 <div
-                  className="flex justify-between items-center px-5 py-4 bg-gray-100 cursor-pointer rounded-xl"
+                  className="flex justify-between items-center px-5 py-4 bg-[#EFEBE9] border border-[#BCAAA4] cursor-pointer"
                   onClick={() =>
                     setCollapsed((prev) => ({ ...prev, [cat._id]: !isOpen }))
                   }
                 >
-                  <h2 className="text-lg font-semibold text-gray-800">{cat.name}</h2>
+                  <h2 className="text-lg font-semibold text-[#3E2723]">{cat.name}</h2>
 
-                  <span className="text-xl transition-transform duration-200"
-                    style={{ transform: isOpen ? "rotate(90deg)" : "rotate(0deg)" }}
-                  >
-                    ▶
-                  </span>
+                  {isOpen ? (
+                    <ChevronDown className="w-6 h-6 text-[#3E2723] transition-all duration-200" />
+                  ) : (
+                    <ChevronRight className="w-6 h-6 text-[#3E2723] transition-all duration-200" />
+                  )}
                 </div>
+
 
                 {/* PRODUCT LIST */}
                 {isOpen && (
                   filteredProducts.length > 0 ? (
                     <table className="w-full">
                       <thead>
-                        <tr className="text-left text-gray-600 bg-gray-50">
+                        <tr className="text-left bg-[#D7CCC8] text-[#3E2723]">
                           <th className="p-3">Image</th>
                           <th className="p-3">Title</th>
                           <th className="p-3">Name</th>
                           <th className="p-3">Price</th>
-                             <th className="p-3">Description</th>
-                        <th className="p-3">fabric</th>
+                          <th className="p-3">Description</th>
+                          <th className="p-3">Fabric</th>
                           <th className="p-3">Colors</th>
                           <th className="p-3">Actions</th>
                         </tr>
@@ -891,7 +898,10 @@ const [selectedProduct, setSelectedProduct] = useState(null);
 
                       <tbody>
                         {filteredProducts.map((p) => (
-                          <tr key={p._id} className="hover:bg-gray-50 shadow-md">
+                          <tr
+                            key={p._id}
+                            className="hover:bg-[#F3EDEB] transition shadow-sm"
+                          >
                             <td className="p-3">
                               <img
                                 src={p.mainImage}
@@ -906,18 +916,105 @@ const [selectedProduct, setSelectedProduct] = useState(null);
                             <td className="p-3">
                               {p.colors?.length > 0 ? p.colors.join(", ") : "--"}
                             </td>
-                            <td>
 
+                            <td className="p-3 flex gap-2">
                               <button
                                 onClick={() => handleEdit(p)}
-                                className="p-3 text-blue-600"
-                              >
-                                <Edit />
+                                className="p-2 bg-amber-900 hover:bg-amber-950 text-white rounded">
+                                <Edit size={18} />
                               </button>
 
                               <button
                                 onClick={() => handleDelete(p._id)}
-                                className="p-3 text-red-600"
+                                className="text-white bg-red-500 p-1"
+                              >
+                                <Trash2 />
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+
+                    </table>
+                  ) : (
+                    <div className="p-4 text-gray-600 italic">
+                      No products in this category
+                    </div>
+                  )
+                )}
+
+              </div>
+
+            );
+          })
+        }
+
+        {/* BEST SELLER VIEW */}
+        {viewType === "bestseller" &&
+          bestSellers.map((bs) => {
+            const filtered = products.filter((p) => p.bestSellerId === bs._id);
+
+            const isOpen = collapsed?.[bs._id] ?? true;
+
+            return (
+              <div key={bs._id} className="rounded-xl shadow bg-white">
+
+                {/* HEADER WITH COLLAPSE ICON */}
+                <div
+                  className="flex justify-between items-center px-5 py-4 bg-[#EFEBE9] border border-[#BCAAA4] cursor-pointer "
+                  onClick={() =>
+                    setCollapsed((prev) => ({ ...prev, [bs._id]: !isOpen }))
+                  }
+                >
+                  <h2 className="text-lg font-semibold text-[#3E2723]">{bs.name}</h2>
+
+                  {isOpen ? (
+                    <ChevronDown className="w-6 h-6 text-[#3E2723] transition-all duration-200" />
+                  ) : (
+                    <ChevronRight className="w-6 h-6 text-[#3E2723] transition-all duration-200" />
+                  )}
+                </div>
+
+
+                {/* TABLE */}
+                {isOpen && (
+                  filtered.length > 0 ? (
+                    <table className="w-full">
+                      <thead className="text-left bg-[#A1887F] text-gray-900">
+                        <tr>
+                          <th className="p-3">Image</th>
+                          <th className="p-3">Title</th>
+                          <th className="p-3">Name</th>
+                          <th className="p-3">Price</th>
+                          <th className="p-3">Description</th>
+                          <th className="p-3">Fabric</th>
+                          <th className="p-3">Colors</th>
+                          <th className="p-3">Actions</th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        {filtered.map((p) => (
+                          <tr key={p._id} className="hover:bg-gray-50 shadow-md">
+                            <td className="p-3">
+                              <img src={p.mainImage} className="w-14 h-14 rounded-md" />
+                            </td>
+                            <td className="p-3">{p.title}</td>
+                            <td className="p-3">{p.name}</td>
+                            <td className="p-3">₹{p.price}</td>
+                            <td className="p-3">{p.description}</td>
+                            <td className="p-3">{p.fabric}</td>
+                            <td className="p-3">{p.colors?.join(", ")}</td>
+                            <td className="p-3">
+                              <button
+                                onClick={() => handleEdit(p)}
+
+                              >
+                                <Edit className="p-3 text-orange-900 hover:text-orange-950" />
+                              </button>
+                              <button
+                                className=" p-3"
+                                onClick={() => handleDelete(p._id)}
                               >
                                 <Trash2 />
                               </button>
@@ -927,100 +1024,15 @@ const [selectedProduct, setSelectedProduct] = useState(null);
                       </tbody>
                     </table>
                   ) : (
-                    <div className="p-4 text-gray-500 italic">
-                      No products in this category
-                    </div>
+                    <div className="p-4 text-gray-500">No items</div>
                   )
                 )}
+
               </div>
             );
           })
         }
 
-        {/* BEST SELLER VIEW */}
-        {viewType === "bestseller" &&
-  bestSellers.map((bs) => {
-    const filtered = products.filter((p) => p.bestSellerId === bs._id);
-
-    const isOpen = collapsed?.[bs._id] ?? true;
-
-    return (
-      <div key={bs._id} className="rounded-xl shadow bg-white">
-
-        {/* HEADER WITH COLLAPSE ICON */}
-        <div
-          className="flex justify-between items-center px-5 py-4 bg-gray-100 cursor-pointer rounded-xl"
-          onClick={() =>
-            setCollapsed((prev) => ({ ...prev, [bs._id]: !isOpen }))
-          }
-        >
-          <h2 className="text-lg font-semibold">{bs.name}</h2>
-
-          <span
-            className="text-xl transition-transform duration-200"
-            style={{ transform: isOpen ? "rotate(90deg)" : "rotate(0deg)" }}
-          >
-            ▶
-          </span>
-        </div>
-
-        {/* TABLE */}
-        {isOpen && (
-          filtered.length > 0 ? (
-            <table className="w-full">
-              <thead className="bg-gray-50 text-gray-600">
-                <tr>
-                  <th className="p-3">Image</th>
-                  <th className="p-3">Title</th>
-                  <th className="p-3">Name</th>
-                  <th className="p-3">Price</th>
-                  <th className="p-3">Description</th>
-                  <th className="p-3">Fabric</th>
-                  <th className="p-3">Colors</th>
-                  <th className="p-3">Actions</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {filtered.map((p) => (
-                  <tr key={p._id} className="hover:bg-gray-50 shadow-md">
-                    <td className="p-3">
-                      <img src={p.mainImage} className="w-14 h-14 rounded-md" />
-                    </td>
-                    <td className="p-3">{p.title}</td>
-                    <td className="p-3">{p.name}</td>
-                    <td className="p-3">₹{p.price}</td>
-                    <td className="p-3">{p.description}</td>
-                    <td className="p-3">{p.fabric}</td>
-                    <td className="p-3">{p.colors?.join(", ")}</td>
-                    <td className="p-3">
-                      <button
-                        onClick={() => handleEdit(p)}
-                        className="p-3 text-blue-600"
-                      >
-                        <Edit />
-                      </button>
-                      <button
-                        className="text-red-600 p-3"
-                        onClick={() => handleDelete(p._id)}
-                      >
-                        <Trash2 />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          ) : (
-            <div className="p-4 text-gray-500">No items</div>
-          )
-        )}
-
-      </div>
-    );
-  })
-}
-        
 
       </div>
 
@@ -1275,14 +1287,14 @@ const [selectedProduct, setSelectedProduct] = useState(null);
       )}
 
 
-   
-    {isEditOpen && (
-  <EditImportProduct
-    selectedProduct={selectedProduct}
-    setIsEditOpen={setIsEditOpen}
-    fetchProducts={fetchProducts}
-  />
-)}
+
+      {isEditOpen && (
+        <EditImportProduct
+          selectedProduct={selectedProduct}
+          setIsEditOpen={setIsEditOpen}
+          fetchProducts={fetchProducts}
+        />
+      )}
 
 
 

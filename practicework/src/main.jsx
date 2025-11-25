@@ -19,6 +19,9 @@ createRoot(document.getElementById("root")).render(
         closeOnClick
         pauseOnHover
         theme="light"
+          progressClassName="toast-progress-bar"
+  bodyClassName="toast-body"
+  toastClassName="toast-container"
       />
  
   </AuthProvider>

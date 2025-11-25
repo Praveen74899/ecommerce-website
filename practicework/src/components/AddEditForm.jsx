@@ -52,7 +52,7 @@ const AddEditForm = ({ onClose, onUserAdded, user }) => {
 
         {/* Header */}
         <div className="flex justify-between items-center mb-4 border-b pb-2">
-          <h2 className="text-xl font-semibold text-gray-800">
+          <h2 className="text-xl font-semibold text-">
             {user ? "Edit User" : "Add User"}
           </h2>
 
@@ -104,7 +104,7 @@ const AddEditForm = ({ onClose, onUserAdded, user }) => {
             type="submit"
             disabled={loading}
             className={`w-full py-2 mt-4 rounded-md text-white ${
-              loading ? 'bg-gray-300 cursor-not-allowed' : 'bg-gray-700 hover:bg-gray-900'
+              loading ? 'bg-[#4E342E] hover:bg-[#3E2723] text-white cursor-not-allowed' : 'bg-[#4E342E] hover:bg-[#3E2723] text-white'
             } transition`}
           >
             {loading ? 'Saving...' : user ? 'Update User' : 'Add User'}

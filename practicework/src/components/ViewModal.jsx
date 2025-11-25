@@ -36,7 +36,7 @@ const ViewUserForm = ({ user, onClose }) => {
         <div className="flex justify-end mt-6">
           <button
             onClick={onClose}
-            className="bg-gray-700 text-white px-5 py-2 rounded-md hover:bg-gray-900 transition"
+            className="bg-[#4E342E] hover:bg-[#3E2723] text-white px-5 py-2 rounded-md  transition"
           >
             Close
           </button>

@@ -413,29 +413,34 @@ const BestSeller = () => {
   };
 
   return (
-    <div className="w-full mx-auto mt-10">
+     <div className="p-6 bg-[#F7F3EF] min-h-screen">
+    <div className="w-full  bg-[#F7F3EF]">
 
       {/* TOP BAR */}
       <div className="flex flex-wrap justify-between items-center mb-5 gap-3">
+  <h1 className="text-2xl font-semibold text-[#4E342E]">
+          BestSeller
+        </h1>
+      
+        <div className="flex gap-3">
 
-        <input
+            <input
           type="text"
           placeholder="Search BestSeller..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="border p-2 rounded-lg w-60 border-gray-300"
+         className="border p-2 rounded-lg w-60 border-[#4E342E]"
         />
 
-        <div className="flex gap-3">
           <button
             onClick={fetchBestSeller}
-            className="bg-gray-200 px-4 py-2 rounded-lg hover:bg-gray-300"
+            className="bg-[#4E342E] hover:bg-[#3E2723] text-white px-4 py-2 rounded-lg "
           >
             Refresh
           </button>
 
           <button
-            className="bg-yellow-600 text-white px-4 py-2 rounded-lg hover:bg-yellow-700"
+             className="bg-[#4E342E] hover:bg-[#3E2723] text-white px-4 py-2 rounded-lg"
             onClick={() => setIsOpen(true)}
           >
             + Add BestSeller
@@ -444,21 +449,26 @@ const BestSeller = () => {
       </div>
 
       {/* TABLE */}
-      <div className="bg-white shadow rounded-xl overflow-hidden border border-gray-200">
-        <table className="w-full border-collapse">
+      <div className="bg-white shadow rounded-xl overflow-hidden border border-[#D7CCC8]">
+        <table className="w-full border-collapse text-left">
 
-          <thead className="bg-gray-100 border-b">
+          <thead className="bg-[#D7CCC8]  border-b">
             <tr>
-              <th className="p-3 text-center">Image</th>
-              <th className="p-3 text-center">Name</th>
-              <th className="p-3 text-center">Status</th>
-              <th className="p-3 text-center">Actions</th>
+                   <th className="p-3 ">#</th>
+              <th className="p-3 ">Image</th>
+              <th className="p-3">Name</th>
+              <th className="p-3">Status</th>
+              <th className="p-3 ">Date</th>
+              <th className="p-3 ">Actions</th>
             </tr>
           </thead>
 
           <tbody>
-            {filtered.map((item) => (
-              <tr key={item._id} className="hover:bg-gray-50 transition text-center">
+            {filtered.map((item,index) => (
+              <tr key={item._id} className="hover:bg-gray-50 transition ">
+        <td className="p-3 "> 
+          {index + 1}
+        </td>
 
                 <td className="p-3">
                   <img src={item.image} className="w-14 h-14 object-cover rounded border shadow" />
@@ -475,16 +485,22 @@ const BestSeller = () => {
                       checked={item.status}
                       onChange={() => handleToggle(item._id, item.status)}
                     />
-                    <div className="w-11 h-6 bg-gray-300 peer-checked:bg-green-500 rounded-full transition-all"></div>
+                    <div className="w-11 h-6 bg-gray-300 peer-checked:bg-amber-900 rounded-full transition-all"></div>
                     <div className="absolute left-1 top-1 w-4 h-4 bg-white rounded-full shadow peer-checked:translate-x-5 transition"></div>
                   </label>
                 </td>
 
+     <td className="p-3 text-gray-600">
+            {item.createdAt
+              ? new Date(item.createdAt).toLocaleDateString("en-IN")
+              : "--"}
+          </td>
+
                 {/* ACTIONS */}
-                <td className="p-3 flex justify-center gap-3">
+                <td className="p-3 flex  gap-3">
                   <button
                     onClick={() => openEditModal(item)}
-                    className="p-2 bg-gray-600 text-white rounded hover:bg-gray-700"
+                     className="p-2 bg-amber-900 hover:bg-amber-950 text-white rounded"
                   >
                     <Edit size={18} />
                   </button>
@@ -584,6 +600,7 @@ const BestSeller = () => {
         </div>
       )}
 
+    </div>
     </div>
   );
 };

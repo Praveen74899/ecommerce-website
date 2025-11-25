@@ -176,13 +176,13 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
   {/* DESKTOP SIDEBAR */}
   <div className="
     hidden md:flex flex-col w-64 
-    bg-[#5D4037] text-white 
+ bg-[#4E342E]  text-white 
     shadow-xl 
     p-6 h-screen 
     sticky top-0
   ">
     <h2 className="text-2xl font-bold tracking-wide mb-8">
-      Admin <span className="text-[#D7CCC8]">Panel</span>
+      Admin Panel
     </h2>
 
     <nav className="space-y-2">

@@ -793,7 +793,8 @@ const toggleActive = async (user) => {
       {/* Add User Button */}
       <button
         onClick={() => setIsModalOpen(true)}
-        className="bg-[#4E342E] hover:bg-[#3E2723] text-white h-10 px-4 rounded shadow-md"
+className="bg-[#4E342E] hover:bg-[#3E2723] text-white px-5 py-2 rounded-lg"
+
       >
         Add User
       </button>
@@ -809,7 +810,7 @@ const toggleActive = async (user) => {
         
         {/* Table Header */}
         <thead>
-          <tr className="bg-[#6D4C41] text-white">
+          <tr className="bg-[#D7CCC8] text-[#3E2723]">
             <th className="py-3 px-4 text-left">#</th>
             <th className="py-3 px-4 text-left">Name</th>
             <th className="py-3 px-4 text-left">Surname</th>
@@ -842,7 +843,7 @@ const toggleActive = async (user) => {
                   />
                   <span
                     className={`w-12 h-6 rounded-full inline-block relative transition 
-                    ${u.status === 1 ? "bg-green-600" : "bg-gray-500"}`}
+                    ${u.status === 1 ? "bg-amber-900" : "bg-gray-500"}`}
                   >
                     <span
                       className={`w-6 h-6 bg-white rounded-full absolute top-0 left-0 transform transition
@@ -859,7 +860,7 @@ const toggleActive = async (user) => {
                 </button>
 
                 <button onClick={() => handleEdit(u)}>
-                  <Edit size={20} className="text-blue-600 hover:text-blue-700" />
+                  <Edit size={20} className="text-orange-900 hover:text-orange-950" />
                 </button>
 
                 <button
@@ -904,8 +905,10 @@ const toggleActive = async (user) => {
 
   {/* Modals */}
   {isModalOpen && (
+  <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-[9999]">
     <AddUserForm onClose={() => setIsModalOpen(false)} onUserAdded={handleUserAdded} />
-  )}
+  </div>
+)}
 
   {isEditOpen && (
     <AddEditForm onClose={() => setIsEditOpen(false)} user={selectedUser} onUserAdded={handleUserAdded} />

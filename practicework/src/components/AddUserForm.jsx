@@ -249,7 +249,7 @@ const AddUserForm = ({ onClose, onUserAdded }) => {
     <>
       {/* Overlay */}
       <div
-        className="fixed inset-0 bg-gray-100 shadow-lg bg-opacity-30 backdrop-blur-sm z-40"
+         className="fixed inset-0 bg-black/10 backdrop-blur-sm transition-opacity duration-200 z-40"
         onClick={onClose}
       ></div>
 
@@ -342,7 +342,7 @@ const AddUserForm = ({ onClose, onUserAdded }) => {
               <button
                 type="submit"
                 disabled={loading}
-                className="bg-gray-700 hover:bg-gray-800 text-white py-2 px-6 rounded"
+                className="bg-[#4E342E] hover:bg-[#3E2723] text-white py-2 px-6 rounded"
               >
                 {loading ? "Saving..." : "Save"}
               </button>
