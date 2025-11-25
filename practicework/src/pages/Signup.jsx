@@ -55,7 +55,7 @@ export default function SignUp() {
         if (response.data.user.role === "admin") {
           navigate("/admin/dashboard");
         } else {
-          navigate("/user/dashboard");
+          navigate("/dashboard");
         }
       } else {
         toast.error(response.data.message || "Sign-up failed");

@@ -10,7 +10,47 @@ export default function Settings() {
 
       <div className="space-y-6 text-gray-800">
 
-        {/* Change Password */}
+        {/* PROFILE INFO */}
+        <div className="p-5 border rounded-xl shadow-sm hover:shadow-md transition cursor-pointer">
+          <h3 className="font-semibold text-lg">Account Information</h3>
+          <p className="text-gray-600 text-sm mt-1">
+            View and update your name, email, and personal details.
+          </p>
+        </div>
+
+        {/* ADDRESS BOOK */}
+        <div className="p-5 border rounded-xl shadow-sm hover:shadow-md transition cursor-pointer">
+          <h3 className="font-semibold text-lg">Address Book</h3>
+          <p className="text-gray-600 text-sm mt-1">
+            Manage your saved delivery addresses for faster checkout.
+          </p>
+        </div>
+
+        {/* ORDER PREFERENCES */}
+        <div className="p-5 border rounded-xl shadow-sm hover:shadow-md transition cursor-pointer">
+          <h3 className="font-semibold text-lg">Order Preferences</h3>
+          <p className="text-gray-600 text-sm mt-1">
+            Choose your default delivery options and save preferences.
+          </p>
+        </div>
+
+        {/* NOTIFICATIONS */}
+        <div className="p-5 border rounded-xl shadow-sm hover:shadow-md transition cursor-pointer">
+          <h3 className="font-semibold text-lg">Notifications</h3>
+          <p className="text-gray-600 text-sm mt-1">
+            Manage your email and SMS alerts.
+          </p>
+        </div>
+
+        {/* THEME */}
+        <div className="p-5 border rounded-xl shadow-sm hover:shadow-md transition cursor-pointer">
+          <h3 className="font-semibold text-lg">Theme & Appearance</h3>
+          <p className="text-gray-600 text-sm mt-1">
+            Switch between light and dark mode for your dashboard.
+          </p>
+        </div>
+
+        {/* CHANGE PASSWORD */}
         <div className="p-5 border rounded-xl shadow-sm hover:shadow-md transition cursor-pointer">
           <h3 className="font-semibold text-lg">Change Password</h3>
           <p className="text-gray-600 text-sm mt-1">
@@ -18,19 +58,19 @@ export default function Settings() {
           </p>
         </div>
 
-        {/* Delete Account */}
+        {/* PRIVACY SETTINGS */}
+        <div className="p-5 border rounded-xl shadow-sm hover:shadow-md transition cursor-pointer">
+          <h3 className="font-semibold text-lg">Privacy & Security</h3>
+          <p className="text-gray-600 text-sm mt-1">
+            Control visibility and secure your account.
+          </p>
+        </div>
+
+        {/* DELETE ACCOUNT */}
         <div className="p-5 border rounded-xl shadow-sm hover:shadow-md transition cursor-pointer">
           <h3 className="font-semibold text-lg text-red-600">Delete Account</h3>
           <p className="text-gray-600 text-sm mt-1">
             Permanently delete your account and all data.
-          </p>
-        </div>
-
-        {/* Notifications */}
-        <div className="p-5 border rounded-xl shadow-sm hover:shadow-md transition cursor-pointer">
-          <h3 className="font-semibold text-lg">Notifications</h3>
-          <p className="text-gray-600 text-sm mt-1">
-            Manage your email and SMS alerts.
           </p>
         </div>
 

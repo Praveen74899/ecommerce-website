@@ -9,7 +9,7 @@ import { jwtDecode } from "jwt-decode";
 import ShopByCategory from "./ShopByCategory";
 import ShopByBestseller from "./ShopByBestseller";
 import NewArrivals from "./NewArrivals";
-
+import { Truck, Star, Globe, Shield, Wallet } from "lucide-react";
 const bannerImages = [
   "/bedsheet.jpg",
   "/image.png",
@@ -124,16 +124,33 @@ const Dashboard = () => {
         <div className="absolute inset-0 bg-black/50"></div>
 
         {/* TEXT ON TOP */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center px-4">
-          <h2 className="text-2xl md:text-4xl font-bold">Premium Home Furnishings</h2>
-          <p className="text-sm md:text-lg mt-2">
-            Comfort, Style & Luxury Now at Your Home
-          </p>
+       <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center px-4">
 
-          <button className="mt-4 px-5 py-2 bg-yellow-600 text-white hover:bg-yellow-800 font-semibold rounded-lg">
-            Shop Now
-          </button>
-        </div>
+  {/* MAIN HEADING */}
+  <h2 className="text-2xl md:text-4xl font-semibold uppercase tracking-[4px]">
+    Premium Home Furnishings
+  </h2>
+
+  {/* SUB TEXT */}
+  <p className="text-[14px] md:text-[16px] tracking-[2px] uppercase mt-3">
+    Comfort · Style · Luxury For Your Home
+  </p>
+
+  {/* BUTTON — SADYASKA STYLE */}
+  <button className="
+    mt-6 px-8 py-2
+    border border-white
+    text-white
+    uppercase tracking-[2px]
+    text-sm
+    hover:bg-white hover:text-black
+    transition-all duration-300
+  ">
+    Shop Now
+  </button>
+
+</div>
+
 
         {/* Left Button */}
         <button
@@ -160,7 +177,7 @@ const Dashboard = () => {
 
       {/* Dashboard Content */}
 
-
+{/* 
       <div className="max-w-7xl mx-auto px-4 md:px-6 my-10">
 
         <h2 className="text-2xl font-semibold text-gray-900 mb-4 border-b-4 border-yellow-500 inline-block pb-1">
@@ -227,7 +244,138 @@ const Dashboard = () => {
             ))}
           </div>
         )}
+      </div> */}
+      <div className="max-w-7xl mx-auto px-4 md:px-6 py-12">
+
+  {/* HEADING LIKE SADYASKA */}
+  <div className="mb-10">
+    <p className="text-[13px] uppercase tracking-[3px] text-gray-700">
+      Explore Our Collection
+    </p>
+
+    <h2 className="text-[26px] font-semibold tracking-[4px] uppercase text-[#1A1A1A] mt-1">
+      All Products
+    </h2>
+  </div>
+
+  {/* LOADING / EMPTY */}
+  {loading ? (
+    <p className="text-gray-600 text-center">Loading products...</p>
+  ) : products.length === 0 ? (
+    <p className="text-gray-600 text-center">No products found.</p>
+  ) : (
+    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-10">
+
+      {products.map((product) => (
+        <div
+          key={product._id}
+          onClick={() => navigate(`/oneproduct/${product._id}`)}
+          className="cursor-pointer group"
+        >
+
+          {/* PRODUCT IMAGE */}
+          <div className="overflow-hidden rounded-sm">
+            <img
+              src={product.mainImage}
+              alt={product.name}
+              className="w-full h-56 object-cover transition duration-500 group-hover:scale-110"
+            />
+          </div>
+
+          {/* NAME */}
+          <h3 className="mt-4 text-[14px] uppercase tracking-[2px] text-[#1A1A1A] font-medium">
+            {product.name}
+          </h3>
+
+          {/* TITLE */}
+          <p className="text-[12px] text-gray-500 mt-1 line-clamp-1">
+            {product.title}
+          </p>
+
+          {/* PRICE + HEART */}
+          <div className="flex justify-between items-center mt-3">
+
+            <p className="text-lg font-semibold text-[#1A1A1A]">
+              INR: {product.price}
+            </p>
+
+            <Heart
+              size={22}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleLike(product._id);
+              }}
+              className={`cursor-pointer transition-all ${
+                product.likedBy?.includes(userId)
+                  ? "text-red-500 fill-red-500"
+                  : "text-gray-500"
+              }`}
+            />
+          </div>
+
+          {/* COLORS + SIZES */}
+          <p className="text-[12px] text-gray-500 mt-1">
+            {Array.isArray(product.sizes) && product.sizes.length > 0 &&
+              <>Sizes: {product.sizes.join(", ")}</>
+            }
+          </p>
+
+          <p className="text-[12px] text-gray-500">
+            {Array.isArray(product.colors) && product.colors.length > 0 &&
+              <>Colors: {product.colors.join(", ")}</>
+            }
+          </p>
+        </div>
+      ))}
+
+    </div>
+  )}
+</div>
+             <div className="w-full mb-8 bg-[#EEE7E1] py-10">
+      <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-5 gap-8 text-center px-6">
+
+        {/* 1. Free Shipping */}
+        <div className="flex flex-col items-center gap-3">
+          <Truck size={30} strokeWidth={1.3} className="text-gray-700" />
+          <p className="text-[12px] tracking-[2px] text-gray-800 uppercase">
+            Free Shipping*
+          </p>
+        </div>
+
+        {/* 2. Best Quality */}
+        <div className="flex flex-col items-center gap-3">
+          <Star size={28} strokeWidth={1.3} className="text-gray-700" />
+          <p className="text-[12px] tracking-[2px] text-gray-800 uppercase">
+            Best Quality With Top-Notch Support
+          </p>
+        </div>
+
+        {/* 3. International Shipping */}
+        <div className="flex flex-col items-center gap-3">
+          <Globe size={28} strokeWidth={1.3} className="text-gray-700" />
+          <p className="text-[12px] tracking-[2px] text-gray-800 uppercase">
+            International Shipping<br />Available On Request
+          </p>
+        </div>
+
+        {/* 4. Secure Payment */}
+        <div className="flex flex-col items-center gap-3">
+          <Shield size={28} strokeWidth={1.3} className="text-gray-700" />
+          <p className="text-[12px] tracking-[2px] text-gray-800 uppercase">
+            Secure Payments
+          </p>
+        </div>
+
+        {/* 5. Cash On Delivery */}
+        <div className="flex flex-col items-center gap-3">
+          <Wallet size={28} strokeWidth={1.3} className="text-gray-700" />
+          <p className="text-[12px] tracking-[2px] text-gray-800 uppercase">
+            Cash On Delivery (COD)<br />For Domestic Orders
+          </p>
+        </div>
+
       </div>
+    </div>
       <Footer />
     </div>
 

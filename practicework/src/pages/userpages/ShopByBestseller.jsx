@@ -29,58 +29,78 @@ const isPage = location.pathname === "/shopbybestseller";
   }, []);
 
   return (
-    <div>
+   <div>
 
-{isPage && (
-  <div className="w-full">
-    <img src="/banner.png" alt="Banner" className="w-full h-56 md:h-72 lg:h-110 "/>
+  {/* TOP BANNER (LIKE SADYASKA COLLECTION PAGE) */}
+  {isPage && (
+    <div className="w-full">
+      <img
+        src="/banner.png"
+        alt="Banner"
+        className="w-full h-56 md:h-72 lg:h-[420px] object-cover"
+      />
+    </div>
+  )}
+
+  {/* SECTION WRAPPER */}
+  <div className="max-w-7xl mx-auto px-4 py-10">
+
+    {/* HEADING LIKE SADYASKA */}
+    <div className="mb-10">
+      <p className="text-[13px] tracking-[3px] uppercase text-gray-700">
+        Explore Our Best Picks
+      </p>
+
+      <h2 className="text-[26px] font-semibold tracking-[4px] uppercase text-[#1A1A1A] mt-1">
+        Best Sellers
+      </h2>
+    </div>
+
+    {/* GRID */}
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-10">
+
+      {data
+        .filter((item) => item.status === true)
+        .map((item) => (
+          <div
+            key={item._id}
+            className="cursor-pointer group overflow-hidden"
+            onClick={() => navigate(`/getallbestseller/${item._id}`)}
+          >
+
+            {/* IMAGE BOX (Sadyaska style) */}
+            <div className="overflow-hidden rounded-sm">
+              <img
+                src={item.image}
+                alt={item.name}
+                className="w-full h-48 object-cover transition duration-500 group-hover:scale-110"
+              />
+            </div>
+
+            {/* CATEGORY NAME RIGHT-ALIGNED */}
+            <div className="mt-4 flex justify-center">
+              <h3 className="text-[13px] uppercase tracking-[2px] text-[#1A1A1A]">
+                {item.name}
+              </h3>
+            </div>
+          </div>
+        ))}
+
+      {/* EMPTY */}
+      {data.length === 0 && (
+        <p className="text-gray-500 text-center col-span-full">
+          No Bestsellers found
+        </p>
+      )}
+
+    </div>
   </div>
-)}
 
-   <div className="max-w-7xl mx-auto p-4">
+  {/* FOOTER */}
+  {isPage && <Footer />}
 
-  {/* Heading */}
-  <h2 className="text-2xl font-semibold text-gray-900 border-b-4 border-yellow-500 inline-block mb-6">
-    Best Sellers
-  </h2>
-
-  {/* Grid */}
-  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-6">
-
- { data.filter((item) => item.status === true)
-      .map((item) => (
-      <div 
-        key={item._id}
-        className="bg-white rounded-xl shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 p-3"
-        onClick={() => navigate(`/getallbestseller/${item._id}`)}
-    >
-        {/* IMAGE */}
-        <img 
-          src={item.image}
-          alt={item.name}
-          className="w-full h-40 object-cover rounded-lg"
-        />
-
-        {/* NAME right aligned */}
-        <div className="mt-3 flex justify-end">
-          <h3 className="text-lg font-medium text-gray-700">
-            {item.name}
-          </h3>
-        </div>
-      </div>
-    ))}
-
-    {/* Empty fallback */}
-    {data.length === 0 && (
-      <p className="text-gray-500 text-center col-span-full">No Bestsellers found</p>
-    )}
-  </div>
 </div>
-  <div>
-    {isPage && <Footer />}
 
-  </div>
-</div>
   );
 };
 

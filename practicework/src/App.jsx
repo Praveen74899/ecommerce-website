@@ -23,6 +23,8 @@ import ShopByBestseller from "./pages/userpages/ShopByBestseller";
 import NewArrivals from "./pages/userpages/NewArrivals";
 import Profile from "./pages/userpages/profile";
 import UserSettings from "./pages/userpages/Setting";
+import Orders from "./pages/userpages/Order";
+import ShowLikeProduct from "./components/ShowLikeProduct";
 function App() {
   return (
 <BrowserRouter>
@@ -39,8 +41,10 @@ function App() {
       <Route path="getallbestseller/:id" element={<GetAllBestSeller />} />
 
 <Route path="newarrivals" element={<NewArrivals  />} />
+<Route path="/wishlist" element={<ShowLikeProduct />} />
 
        <Route path="about" element={<About />} />
+       <Route path="/orders" element={<Orders />} />
     </Route>
 
     {/* 🔐 Login / Signup */}

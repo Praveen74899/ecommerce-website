@@ -837,17 +837,17 @@ className="bg-[#4E342E] hover:bg-[#3E2723] text-white px-5 py-2 rounded-lg"
                 <label className="inline-flex items-center cursor-pointer">
                   <input
                     type="checkbox"
-                    checked={u.status === 1}
+                    checked={u.status === 0}
                     onChange={() => toggleActive(u)}
                     className="hidden"
                   />
                   <span
                     className={`w-12 h-6 rounded-full inline-block relative transition 
-                    ${u.status === 1 ? "bg-amber-900" : "bg-gray-500"}`}
+                    ${u.status === 0 ? "bg-amber-900" : "bg-gray-500"}`}
                   >
                     <span
                       className={`w-6 h-6 bg-white rounded-full absolute top-0 left-0 transform transition
-                      ${u.status === 1 ? "translate-x-6" : "translate-x-0"}`}
+                      ${u.status === 0 ? "translate-x-6" : "translate-x-0"}`}
                     ></span>
                   </span>
                 </label>

@@ -2,13 +2,13 @@ import React from 'react'
 
 const Footer = () => {
   return (
-    <div><footer className="bg-yellow-900 text-gray-300 pt-12 pb-8 px-6">
+    <div><footer className="bg-[#EDE6D8] text-gray-900 pt-12 pb-8 px-6">
 
   <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
 
     {/* COLUMN 1 */}
     <div>
-      <h2 className="text-white font-semibold text-lg mb-4">TRIDENT GROUP</h2>
+      <h2 className="text-black font-semibold text-lg mb-4">TRIDENT GROUP</h2>
       <ul className="space-y-2 text-sm">
         <li>About Us</li>
         <li>Raise Return/Exchange</li>
@@ -25,7 +25,7 @@ const Footer = () => {
 
     {/* COLUMN 2 */}
     <div>
-      <h2 className="text-white font-semibold text-lg mb-4">CATEGORIES</h2>
+      <h2 className="text-black e font-semibold text-lg mb-4">CATEGORIES</h2>
       <ul className="space-y-2 text-sm">
         <li>Bedding</li>
         <li>Towels</li>
@@ -37,7 +37,7 @@ const Footer = () => {
 
     {/* COLUMN 3 - SOCIAL + CONTACT */}
     <div>
-      <h2 className="text-white font-semibold text-lg mb-4">FOLLOW US</h2>
+      <h2 className="text-black font-semibold text-lg mb-4">FOLLOW US</h2>
 
       <div className="flex gap-4 mb-6">
         <i className="fa-brands fa-facebook text-2xl hover:text-white"></i>
@@ -46,7 +46,7 @@ const Footer = () => {
         <i className="fa-brands fa-pinterest text-2xl hover:text-white"></i>
       </div>
 
-      <h2 className="text-white font-semibold text-lg mb-3">Contact Us</h2>
+      <h2 className="text-black  font-semibold text-lg mb-3">Contact Us</h2>
 
       <p className="text-sm">E-MAIL:</p>
       <p className="text-sm mb-2">care@mytrident.com</p>
@@ -60,7 +60,7 @@ const Footer = () => {
 
     {/* COLUMN 4 - NEWSLETTER */}
     <div>
-      <h2 className="text-white font-semibold text-lg mb-4">JOIN OUR NEWSLETTER</h2>
+      <h2 className="text-black  font-semibold text-lg mb-4">JOIN OUR NEWSLETTER</h2>
 
       <p className="text-sm mb-4">
         Get updates about new products and exclusive discounts.

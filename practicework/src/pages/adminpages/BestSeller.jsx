@@ -584,7 +584,7 @@ const BestSeller = () => {
               {editPreview && <img src={editPreview} className="w-32 h-32 rounded mx-auto border" />}
 
               <div className="flex justify-end gap-3">
-                <button className="bg-yellow-600 text-white px-4 py-2 rounded-lg">Update</button>
+                <button className="bg-amber-900 text-white px-4 py-2 rounded-lg">Update</button>
                 <button
                   type="button"
                   onClick={() => setIsEditOpen(false)}

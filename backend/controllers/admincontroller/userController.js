@@ -158,12 +158,14 @@ exports.deleteUser = async (req, res) => {
 exports.signupUser = async (req, res) => {
   try {
     const { forname, surname, email, password } = req.body;
-    if (!forname || !surname || !email) {
+
+    if (!forname || !surname || !email || !password) {
       return res.status(400).json({
         success: false,
         message: "Please enter all fields"
-      })
+      });
     }
+
     const adminEmails = ["admin@gmail.com"];
 
     if (adminEmails.includes(email)) {
@@ -173,45 +175,50 @@ exports.signupUser = async (req, res) => {
       });
     }
 
-    const user = await User.findOne({ email });
-    if (user) {
+    const existingUser = await User.findOne({ email });
+
+    if (existingUser) {
       return res.status(400).json({
         success: false,
         message: "User already exists"
-      })
+      });
     }
 
-    if (!email.includes("@") || !email.endsWith("gmail.com")) {
-      return res.status(400).json({ message: "Invalid email format. Email must contain '@' and end with '.com'." });
-    }
+    const hashedPassword = await bcrypt.hash(password, 10);
 
+    const newUser = await User.create({
+      forname,
+      surname,
+      email,
+      password: hashedPassword,
+      role: "user"
+    });
 
+    // ⭐ ⭐ TOKEN GENERATE KARO (BIG FIX)
+    const token = jwt.sign(
+      { id: newUser._id, role: newUser.role },
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" }
+    );
 
-    let hashedPassword;
-    if (password) {
-      hashedPassword = await bcrypt.hash(password, 10);
-
-    }
-
-    if (!password) {
-      hashedPassword = crypto.randomBytes(8).toString('hex');
-    }
-    const newUser = await User.create({ forname, surname, email, password: hashedPassword });
     newUser.password = undefined;
+
     return res.status(201).json({
       success: true,
       message: "User created successfully",
+      token,         // ⭐ AB token jayega
       user: newUser
-    })
+    });
 
   } catch (error) {
     return res.status(500).json({
       success: false,
       error: error.message,
       message: "Failed to signup user"
-    })
+    });
   }
-}
+};
+
 
 
 

@@ -1,6 +1,9 @@
+const mongoose = require("mongoose");
+
 const products = require("../../models/uploadmodel.js")
   const BestSeller = require("../../models/bestseller.js");
-  
+
+  const Category = require("../../models/categorymodel.js");
 exports.getAllProductsForUser = async (req, res) => {
   try {
       console.log("Controller hit");
@@ -124,15 +127,54 @@ exports.getBestSeller = async (req,res) => {
 
 
 
+// exports.getAllbestsellerbyid = async (req, res) => {
+//   try {
+//     const bestSellerId = req.params.id;
+//     const product = await products.find({ bestSeller: bestSellerId });
+//     res.status(200).json({ success: true, message: "BestSeller products fetched successfully", product });
+//   } catch (error) {
+//     res.status(500).json({ success: false, message: error.message });
+//   }
+// };
+
 exports.getAllbestsellerbyid = async (req, res) => {
   try {
     const bestSellerId = req.params.id;
-    const product = await products.find({ bestSeller: bestSellerId });
-    res.status(200).json({ success: true, message: "BestSeller products fetched successfully", product });
+
+    if (!bestSellerId) {
+      return res.status(400).json({
+        success: false,
+        message: "Best Seller ID is required",
+      });
+    }
+
+    // Convert string → ObjectId
+ const objectId = new mongoose.Types.ObjectId(bestSellerId);
+
+    // Fetch products linked to this bestSellerId
+    const product = await products.find({ bestSellerId: objectId });
+
+    if (!product || product.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No products found for this BestSeller ID",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Bestseller products fetched successfully",
+      products: product
+    });
+
   } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
+    return res.status(500).json({
+      success: false,
+      message: error.message
+    });
   }
 };
+
 
 
 exports.getAllNewArrival = async (req,res) => {
@@ -157,5 +199,48 @@ exports.getSearchProduct = async (req, res) => {
     res.status(200).json({ success: true, message: "Search product fetched successfully", product });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+
+
+exports.getAllCategories = async (req, res) => {
+  try {
+    const categories = await Category.find();
+    res.status(200).json({ success: true, categories });
+
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+
+
+exports.getalllikeproduct = async (req, res) => {
+  try {
+    const product = await products.find({ likedBy: req.body.userId });
+    res.status(200).json({ success: true, product });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+exports.getUserLikedProducts = async (req, res) => {
+  try {
+    const userId = req.user.id; // middleware se mila token user id
+
+    // find only products where likedBy array contains userId
+    const product = await products.find({ likedBy: userId });
+
+    return res.status(200).json({
+      success: true,
+      count: product.length,
+      product,
+    });
+
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
   }
 };
